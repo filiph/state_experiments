@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ui';
+import 'dart:ui' show Color;
 
 import 'product.dart';
 
@@ -12,6 +12,10 @@ const List<Product> _products = const <Product>[
   const Product(321, "Tuxedo", const Color.fromRGBO(250, 250, 0, 1.0)),
 ];
 
+/// Returns the catalog of products.
 Future<List<Product>> getProducts() {
+  // This simulates a short delay so that we don't get too cocky about having
+  // this state present from application start (something unlikely to happen
+  // in the real world).
   return new Future.delayed(const Duration(milliseconds: 200), () => _products);
 }

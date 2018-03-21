@@ -13,26 +13,28 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Flutter Reactive'),
+      home: new MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  /// The ordered list of products available for purchase.
   List<Product> _catalog = [];
+
+  /// The current state of the user's cart.
   Cart _cart = new Cart();
 
   @override
   void initState() {
+    // Fetch the catalog.
     getProducts().then((value) => setState(() => _catalog = value));
     super.initState();
   }
@@ -41,23 +43,29 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text("Flutter Reactive"),
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.shopping_cart), onPressed: () {})
+          new IconButton(
+              icon: new Icon(Icons.shopping_cart),
+              onPressed: () {
+                // TODO: implement this route
+              }),
         ],
       ),
       body: new Column(
         children: <Widget>[
-          new Container(child: new Text("Cart: ${_cart.state}")),
+          new Container(
+              padding: const EdgeInsets.all(24.0),
+              child: new Text("Cart: ${_cart.items}")),
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
               children: _catalog.map((product) {
                 return new Container(
-                    color: product.color,
-                    child: new InkWell(
-                    onTap: () => setState(() =>_cart.add(product)),
-                      child: new Center(child: new Text(product.name)),
+                  color: product.color,
+                  child: new InkWell(
+                    onTap: () => setState(() => _cart.add(product)),
+                    child: new Center(child: new Text(product.name)),
                   ),
                 );
               }).toList(),
