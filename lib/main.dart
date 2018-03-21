@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_exploration/src/cart.dart';
-import 'package:reactive_exploration/src/product.dart';
-import 'package:reactive_exploration/src/product_db.dart';
+import 'src/cart.dart';
+import 'src/product.dart';
+import 'src/product_db.dart';
+import 'scoped.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(),
+      // home: new MyHomePage(),
+      home: new ScopedHomePage(title: 'Scoped Model Example'),
     );
   }
 }

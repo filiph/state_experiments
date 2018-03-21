@@ -1,7 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:reactive_exploration/src/product.dart';
+import 'product.dart';
 
 class Cart {
   List<CartItem> _items = <CartItem>[];
