@@ -103,7 +103,14 @@ class ProductGrid extends StatelessWidget {
                       child: new ScopedModelDescendant<CartModel>(
                         builder: (context, child, model) => new InkWell(
                               onTap: () => model.add(product),
-                              child: new Center(child: new Text(product.name)),
+                              child: new Center(
+                                  child: new Text(
+                                product.name,
+                                style: new TextStyle(
+                                    color: isDark(product.color)
+                                        ? Colors.white
+                                        : Colors.black),
+                              )),
                             ),
                       ),
                     );
@@ -112,4 +119,12 @@ class ProductGrid extends StatelessWidget {
           }
         });
   }
+}
+
+/// See https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
+bool isDark(Color color) {
+  final luminence =
+      (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue);
+  print(luminence);
+  return luminence < 150;
 }
