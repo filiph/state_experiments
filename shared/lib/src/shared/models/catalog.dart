@@ -2,9 +2,18 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:ui' show Color;
 
-import 'product.dart';
+import 'package:reactive_exploration/src/shared/models/product.dart';
 
-/// Returns the catalog of products.
+/// Fetches the catalog of products asynchronously.
+Future<Catalog> fetchCatalog() {
+  // This simulates a short delay so that we don't get too cocky about having
+  // this state present from application start (something unlikely to happen
+  // in the real world).
+  return new Future.delayed(
+      const Duration(milliseconds: 200), () => new Catalog._sample());
+}
+
+/// Updates the catalog of products asynchronously.
 Future<Null> updateCatalog(Catalog catalog) {
   // This simulates a short delay so that we don't get too cocky about having
   // this state present from application start (something unlikely to happen
@@ -28,6 +37,8 @@ class Catalog {
   final List<Product> _products;
 
   Catalog.empty() : _products = [];
+
+  Catalog._sample() : _products = _sampleProducts;
 
   UnmodifiableListView<Product> get products =>
       new UnmodifiableListView<Product>(_products);
