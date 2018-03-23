@@ -2,6 +2,7 @@ name: reactive_exploration
 description: Reactive Flutter apps
 
 dependencies:
+  rxdart: ^0.16.0+2
   flutter:
     sdk: flutter
 
