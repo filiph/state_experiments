@@ -4,7 +4,7 @@ import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 void main() {
   final flavor = Architecture.vanilla;
 
-  print("Running: $flavor");
+  print("\n\n===== Running: $flavor =====\n\n");
 
   switch (flavor) {
     case Architecture.vanilla:
