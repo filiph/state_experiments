@@ -1,11 +1,52 @@
 import 'package:flutter/material.dart';
+
 import 'src/cart.dart';
-import 'src/product.dart';
-import 'src/product_db.dart';
+import 'src/catalog.dart';
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget {
+/// See https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
+bool isDark(Color color) {
+  final luminence =
+      (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue);
+  return luminence < 150;
+}
+
+class CartPage extends StatefulWidget {
+  static const routeName = "/cart";
+
+  final Catalog _catalog;
+
+  final Cart _cart;
+
+  CartPage(this._catalog, this._cart, {Key key}) : super(key: key);
+
+  @override
+  State<CartPage> createState() => new _CartPageState(_catalog, _cart);
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => new _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Catalog _catalog = new Catalog.empty();
+  final Cart _cart = new Cart();
+
+  _MyAppState();
+
+  @override
+  void initState() {
+    super.initState();
+
+    updateCatalog(_catalog).then((_) => setState(() {
+      // Calling setState with nothing at all in it is code smell.
+      // But this is also the easiest way to do it without introducing more
+      // advanced techniques.
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -13,31 +54,51 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(),
+      home: new MyHomePage(_catalog, _cart),
+      routes: <String, WidgetBuilder>{
+        CartPage.routeName: (context) => new CartPage(_catalog, _cart)
+      },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  final Catalog _catalog;
+
+  final Cart _cart;
+
+  MyHomePage(this._catalog, this._cart, {Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => new _MyHomePageState(_catalog, _cart);
+}
+
+class _CartPageState extends State<CartPage> {
+  final Catalog _catalog;
+
+  final Cart _cart;
+
+  _CartPageState(this._catalog, this._cart);
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Your Cart"),
+      ),
+      body: new Text("Cart: ${_cart.items}"),
+    );
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  /// The ordered list of products available for purchase.
-  List<Product> _catalog = [];
+  /// The list of products available for purchase.
+  final Catalog _catalog;
 
   /// The current state of the user's cart.
-  Cart _cart = new Cart();
+  final Cart _cart;
 
-  @override
-  void initState() {
-    // Fetch the catalog.
-    getProducts().then((value) => setState(() => _catalog = value));
-    super.initState();
-  }
+  _MyHomePageState(this._catalog, this._cart);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
           new IconButton(
               icon: new Icon(Icons.shopping_cart),
               onPressed: () {
-                // TODO: implement this route
+                Navigator.of(context).pushNamed(CartPage.routeName);
               }),
         ],
       ),
@@ -60,11 +121,13 @@ class _MyHomePageState extends State<MyHomePage> {
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
-              children: _catalog.map((product) {
+              children: _catalog.products.map((product) {
                 return new Container(
                   color: product.color,
                   child: new InkWell(
-                    onTap: () => setState(() => _cart.add(product)),
+                    onTap: () => setState(() {
+                          _cart.add(product);
+                        }),
                     child: new Center(
                         child: new Text(
                       product.name,
@@ -82,11 +145,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
-
-/// See https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
-bool isDark(Color color) {
-  final luminence =
-      (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue);
-  return luminence < 150;
 }
