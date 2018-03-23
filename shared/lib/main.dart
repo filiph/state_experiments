@@ -1,10 +1,5 @@
-import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 import 'package:reactive_exploration/src/value_notifier/main.dart' as value_notifier;
-
-enum Architecture {
-  vanilla,
-  valueNotifier
-}
+import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 
 void main() {
   final flavor = Architecture.vanilla;
@@ -19,4 +14,9 @@ void main() {
       value_notifier.main();
       return;
   }
+}
+
+enum Architecture {
+  vanilla,
+  valueNotifier
 }
