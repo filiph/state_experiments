@@ -65,7 +65,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: product.color,
                   child: new InkWell(
                     onTap: () => setState(() => _cart.add(product)),
-                    child: new Center(child: new Text(product.name)),
+                    child: new Center(
+                        child: new Text(
+                      product.name,
+                      style: new TextStyle(
+                          color: isDark(product.color)
+                              ? Colors.white
+                              : Colors.black),
+                    )),
                   ),
                 );
               }).toList(),
@@ -75,4 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+/// See https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
+bool isDark(Color color) {
+  final luminence =
+      (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue);
+  return luminence < 150;
 }
