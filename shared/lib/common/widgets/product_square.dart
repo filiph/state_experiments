@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:reactive_exploration/src/shared/models/product.dart';
-import 'package:reactive_exploration/src/shared/utils/is_dark.dart';
+import 'package:reactive_exploration/common/models/product.dart';
+import 'package:reactive_exploration/common/utils/is_dark.dart';
 
 class ProductSquare extends StatelessWidget {
   final Product product;

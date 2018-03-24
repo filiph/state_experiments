@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:reactive_exploration/common/models/cart.dart';
+import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/src/bloc/src/bloc.dart';
-import 'package:reactive_exploration/src/shared/models/cart.dart';
-import 'package:reactive_exploration/src/shared/models/catalog.dart';
-import 'package:reactive_exploration/src/shared/models/product.dart';
 import 'package:rxdart/subjects.dart';
 
 /// Adds [product] to cart. This will either update an existing [CartItem]

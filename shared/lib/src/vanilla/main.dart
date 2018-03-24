@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:reactive_exploration/src/shared/models/cart.dart';
-import 'package:reactive_exploration/src/shared/models/catalog.dart';
-import 'package:reactive_exploration/src/shared/widgets/product_square.dart';
+import 'package:reactive_exploration/common/models/cart.dart';
+import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() => runApp(new MyApp());
 

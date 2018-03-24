@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:reactive_exploration/src/shared/models/cart.dart';
-import 'package:reactive_exploration/src/shared/models/catalog.dart';
+import 'package:reactive_exploration/common/models/cart.dart';
+import 'package:reactive_exploration/common/models/catalog.dart';
 
 void main() {
   final catalogNotifier = new ValueNotifier(new Catalog.empty());

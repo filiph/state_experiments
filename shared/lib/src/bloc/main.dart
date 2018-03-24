@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:reactive_exploration/common/models/cart.dart';
+import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/src/bloc/src/shop.dart';
-import 'package:reactive_exploration/src/shared/models/cart.dart';
-import 'package:reactive_exploration/src/shared/models/catalog.dart';
-import 'package:reactive_exploration/src/shared/widgets/product_square.dart';
 
 void main() {
   final shop = new Shop();
