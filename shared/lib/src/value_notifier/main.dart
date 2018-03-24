@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() {
   final catalogNotifier = new ValueNotifier(new Catalog.empty());
@@ -12,13 +13,6 @@ void main() {
     catalogNotifier: catalogNotifier,
     cartNotifier: cartNotifier,
   ));
-}
-
-/// See https://stackoverflow.com/questions/596216/formula-to-determine-brightness-of-rgb-color
-bool isDark(Color color) {
-  final luminence =
-  (0.2126 * color.red + 0.7152 * color.green + 0.0722 * color.blue);
-  return luminence < 150;
 }
 
 class CartPage extends StatefulWidget {
@@ -56,7 +50,7 @@ class MyApp extends StatelessWidget {
           catalogNotifier: catalogNotifier, cartNotifier: cartNotifier),
       routes: <String, WidgetBuilder>{
         CartPage.routeName: (context) =>
-        new CartPage(cartNotifier: cartNotifier)
+            new CartPage(cartNotifier: cartNotifier)
       },
     );
   }
@@ -149,22 +143,12 @@ class _MyHomePageState extends State<MyHomePage> {
             child: new GridView.count(
               crossAxisCount: 2,
               children: _catalog.products.map((product) {
-                return new Container(
-                  color: product.color,
-                  child: new InkWell(
-                    onTap: () => setState(() {
-                      _cart.add(product);
-                      cartNotifier.value = _cart;
-                    }),
-                    child: new Center(
-                        child: new Text(
-                          product.name,
-                          style: new TextStyle(
-                              color: isDark(product.color)
-                                  ? Colors.white
-                                  : Colors.black),
-                        )),
-                  ),
+                return new ProductSquare(
+                  product: product,
+                  onTap: () => setState(() {
+                        _cart.add(product);
+                        cartNotifier.value = _cart;
+                      }),
                 );
               }).toList(),
             ),
