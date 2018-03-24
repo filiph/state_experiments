@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/src/bloc/src/cart_bloc.dart';
+import 'package:reactive_exploration/src/bloc/src/catalog_bloc.dart';
 import 'package:reactive_exploration/src/shared/models/cart.dart';
 import 'package:reactive_exploration/src/shared/models/catalog.dart';
 import 'package:reactive_exploration/src/shared/widgets/product_square.dart';
 
 void main() {
-  final catalogNotifier = new ValueNotifier(new Catalog.empty());
-  fetchCatalog().then((fetched) => catalogNotifier.value = fetched);
-
+  final catalogBloc = new CatalogBloc();
   final cart = new CartBloc();
 
   runApp(new MyApp(
-    catalogNotifier: catalogNotifier,
+    catalogBloc: catalogBloc,
     cartBloc: cart,
   ));
 }
@@ -32,12 +31,12 @@ class CartPage extends StatefulWidget {
 }
 
 class MyApp extends StatelessWidget {
-  final ValueNotifier<Catalog> catalogNotifier;
+  final CatalogBloc catalogBloc;
   final CartBloc cartBloc;
 
   MyApp({
     Key key,
-    @required this.catalogNotifier,
+    @required this.catalogBloc,
     @required this.cartBloc,
   }) : super(key: key);
 
@@ -48,8 +47,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:
-          new MyHomePage(catalogNotifier: catalogNotifier, cartBloc: cartBloc),
+      home: new MyHomePage(catalogBloc: catalogBloc, cartBloc: cartBloc),
       routes: <String, WidgetBuilder>{
         CartPage.routeName: (context) => new CartPage(cartBloc: cartBloc)
       },
@@ -58,19 +56,18 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final ValueNotifier<Catalog> catalogNotifier;
+  final CatalogBloc catalogBloc;
 
   final CartBloc cartBloc;
 
   MyHomePage({
-    @required this.catalogNotifier,
+    @required this.catalogBloc,
     @required this.cartBloc,
     Key key,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() =>
-      new _MyHomePageState(catalogNotifier, cartBloc);
+  _MyHomePageState createState() => new _MyHomePageState(catalogBloc, cartBloc);
 }
 
 class _CartPageState extends State<CartPage> {
@@ -93,16 +90,11 @@ class _CartPageState extends State<CartPage> {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final ValueNotifier<Catalog> catalogNotifier;
-
-  Catalog _catalog;
+  final CatalogBloc catalogBloc;
 
   final CartBloc cartBloc;
 
-  _MyHomePageState(this.catalogNotifier, this.cartBloc) {
-    catalogNotifier.addListener(_catalogUpdatedHandler);
-    _catalog = catalogNotifier.value;
-  }
+  _MyHomePageState(this.catalogBloc, this.cartBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -127,31 +119,24 @@ class _MyHomePageState extends State<MyHomePage> {
                       ? "Cart: ${snapshot.data}"
                       : "Cart empty"))),
           new Expanded(
-            child: new GridView.count(
-              crossAxisCount: 2,
-              children: _catalog.products.map((product) {
-                return new ProductSquare(
-                  product: product,
-                  onTap: () =>
-                      cartBloc.cartAddition.add(new CartAddition(product)),
-                );
-              }).toList(),
+            child: new StreamBuilder<Catalog>(
+              stream: catalogBloc.catalog.stream,
+              builder: (context, snapshot) => !snapshot.hasData
+                  ? new Text("No data")
+                  : new GridView.count(
+                      crossAxisCount: 2,
+                      children: snapshot.data.products.map((product) {
+                        return new ProductSquare(
+                          product: product,
+                          onTap: () => cartBloc.cartAddition
+                              .add(new CartAddition(product)),
+                        );
+                      }).toList(),
+                    ),
             ),
           )
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    catalogNotifier.removeListener(_catalogUpdatedHandler);
-    super.dispose();
-  }
-
-  void _catalogUpdatedHandler() {
-    setState(() {
-      _catalog = catalogNotifier.value;
-    });
   }
 }
