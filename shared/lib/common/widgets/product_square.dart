@@ -16,7 +16,7 @@ class ProductSquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
+    return new Material(
       color: product.color,
       child: new InkWell(
         onTap: onTap,
