@@ -40,16 +40,3 @@ class CartAddition {
 
   const CartAddition(this.product, [this.count = 1]);
 }
-
-/// A single line in the cart.
-///
-/// Uses [toString] to render itself nice in text.
-class CartItem {
-  final int count;
-  final Product product;
-
-  const CartItem(this.count, this.product);
-
-  @override
-  String toString() => "${product.name} ✕ $count";
-}
