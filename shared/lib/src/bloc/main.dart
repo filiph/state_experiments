@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/src/bloc/src/cart_bloc.dart';
+import 'package:reactive_exploration/src/shared/models/cart.dart';
 import 'package:reactive_exploration/src/shared/models/catalog.dart';
-import 'package:reactive_exploration/src/shared/utils/is_dark.dart';
 import 'package:reactive_exploration/src/shared/widgets/product_square.dart';
 
 void main() {
@@ -13,32 +13,32 @@ void main() {
 
   runApp(new MyApp(
     catalogNotifier: catalogNotifier,
-    cart: cart,
+    cartBloc: cart,
   ));
 }
 
 class CartPage extends StatefulWidget {
   static const routeName = "/cart";
 
-  final CartBloc cart;
+  final CartBloc cartBloc;
 
   CartPage({
     Key key,
-    @required this.cart,
+    @required this.cartBloc,
   }) : super(key: key);
 
   @override
-  State<CartPage> createState() => new _CartPageState(cart);
+  State<CartPage> createState() => new _CartPageState(cartBloc);
 }
 
 class MyApp extends StatelessWidget {
   final ValueNotifier<Catalog> catalogNotifier;
-  final CartBloc cart;
+  final CartBloc cartBloc;
 
   MyApp({
     Key key,
     @required this.catalogNotifier,
-    @required this.cart,
+    @required this.cartBloc,
   }) : super(key: key);
 
   @override
@@ -48,9 +48,10 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(catalogNotifier: catalogNotifier, cart: cart),
+      home:
+          new MyHomePage(catalogNotifier: catalogNotifier, cartBloc: cartBloc),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(cart: cart)
+        CartPage.routeName: (context) => new CartPage(cartBloc: cartBloc)
       },
     );
   }
@@ -59,22 +60,23 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final ValueNotifier<Catalog> catalogNotifier;
 
-  final CartBloc cart;
+  final CartBloc cartBloc;
 
   MyHomePage({
     @required this.catalogNotifier,
-    @required this.cart,
+    @required this.cartBloc,
     Key key,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState(catalogNotifier, cart);
+  _MyHomePageState createState() =>
+      new _MyHomePageState(catalogNotifier, cartBloc);
 }
 
 class _CartPageState extends State<CartPage> {
-  final CartBloc cart;
+  final CartBloc cartBloc;
 
-  _CartPageState(this.cart);
+  _CartPageState(this.cartBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +84,8 @@ class _CartPageState extends State<CartPage> {
       appBar: new AppBar(
         title: new Text("Your Cart"),
       ),
-      body: new StreamBuilder<List<CartItem>>(
-          stream: cart.items.stream,
+      body: new StreamBuilder<Cart>(
+          stream: cartBloc.cart.stream,
           builder: (context, snapshot) => new Text(
               snapshot.hasData ? "Cart: ${snapshot.data}" : "Empty cart")),
     );
@@ -95,9 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Catalog _catalog;
 
-  final CartBloc cart;
+  final CartBloc cartBloc;
 
-  _MyHomePageState(this.catalogNotifier, this.cart) {
+  _MyHomePageState(this.catalogNotifier, this.cartBloc) {
     catalogNotifier.addListener(_catalogUpdatedHandler);
     _catalog = catalogNotifier.value;
   }
@@ -119,8 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           new Container(
               padding: const EdgeInsets.all(24.0),
-              child: new StreamBuilder<List<CartItem>>(
-                  stream: cart.items.stream,
+              child: new StreamBuilder<Cart>(
+                  stream: cartBloc.cart.stream,
                   builder: (context, snapshot) => new Text(snapshot.hasData
                       ? "Cart: ${snapshot.data}"
                       : "Cart empty"))),
@@ -130,7 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
               children: _catalog.products.map((product) {
                 return new ProductSquare(
                   product: product,
-                  onTap: () => cart.cartAddition.add(new CartAddition(product)),
+                  onTap: () =>
+                      cartBloc.cartAddition.add(new CartAddition(product)),
                 );
               }).toList(),
             ),

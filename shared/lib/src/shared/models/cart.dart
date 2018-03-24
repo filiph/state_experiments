@@ -45,6 +45,9 @@ class Cart {
     if (difference < 0) return;
     _items.add(new CartItem(max(difference, 0), product));
   }
+
+  @override
+  String toString() => "$items";
 }
 
 /// A single line in the cart.

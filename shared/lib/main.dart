@@ -4,7 +4,7 @@ import 'package:reactive_exploration/src/value_notifier/main.dart'
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 
 void main() {
-  final flavor = Architecture.bloc;
+  final flavor = Architecture.vanilla;
 
   print("\n\n===== Running: $flavor =====\n\n");
 
