@@ -42,4 +42,7 @@ class Catalog {
 
   UnmodifiableListView<Product> get products =>
       new UnmodifiableListView<Product>(_products);
+
+  // We're assuming that a catalog isn't empty after it's initialized.
+  bool get loading => _products.isEmpty;
 }

@@ -11,7 +11,7 @@ void main() {
   runApp(new MyApp(shop: shop));
 }
 
-class CartPage extends StatefulWidget {
+class CartPage extends StatelessWidget {
   static const routeName = "/cart";
 
   final Shop shop;
@@ -19,7 +19,17 @@ class CartPage extends StatefulWidget {
   CartPage({Key key, @required this.shop}) : super(key: key);
 
   @override
-  State<CartPage> createState() => new _CartPageState(shop);
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Your Cart"),
+      ),
+      body: new StreamBuilder<Cart>(
+          stream: shop.cart.stream,
+          builder: (context, snapshot) => new Text(
+              snapshot.hasData ? "Cart: ${snapshot.data}" : "Empty cart")),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -42,38 +52,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   final Shop shop;
 
   MyHomePage({Key key, @required this.shop}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => new _MyHomePageState(shop);
-}
-
-class _CartPageState extends State<CartPage> {
-  final Shop shop;
-
-  _CartPageState(this.shop);
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Your Cart"),
-      ),
-      body: new StreamBuilder<Cart>(
-          stream: shop.cart.stream,
-          builder: (context, snapshot) => new Text(
-              snapshot.hasData ? "Cart: ${snapshot.data}" : "Empty cart")),
-    );
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final Shop shop;
-
-  _MyHomePageState(this.shop);
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: new Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           new Container(
               padding: const EdgeInsets.all(24.0),
@@ -100,7 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
           new Expanded(
             child: new StreamBuilder<Catalog>(
               stream: shop.catalog.stream,
-              builder: (context, snapshot) => !snapshot.hasData
+              builder: (context, snapshot) => (!snapshot.hasData ||
+                      snapshot.data.loading)
                   ? new Text("No data")
                   : new GridView.count(
                       crossAxisCount: 2,
