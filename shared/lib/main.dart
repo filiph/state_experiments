@@ -21,4 +21,8 @@ void main() {
   }
 }
 
-enum Architecture { bloc, vanilla, valueNotifier }
+enum Architecture {
+  bloc,
+  vanilla,
+  valueNotifier,
+}
