@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Reactive',
+      title: 'Vanilla',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Flutter Reactive"),
+        title: new Text("Vanilla"),
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.shopping_cart),

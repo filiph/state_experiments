@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Reactive',
+      title: 'Bloc',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -61,7 +61,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Flutter Reactive"),
+        title: new Text("Bloc"),
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.shopping_cart),
