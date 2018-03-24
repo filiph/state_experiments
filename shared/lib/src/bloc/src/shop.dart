@@ -26,13 +26,9 @@ class Shop extends Bloc {
   final BehaviorSubject<Catalog> _catalogSubject =
       new BehaviorSubject<Catalog>(seedValue: new Catalog.empty());
 
-  final BehaviorSubject<bool> _loading =
-      new BehaviorSubject<bool>(seedValue: true);
-
   Shop() {
     _requestRefreshController.stream.listen((_) {
       _fetchCatalog();
-      _loading.add(true);
     });
     _fetchCatalog();
 
@@ -51,15 +47,12 @@ class Shop extends Bloc {
   /// This is the stream of the latest state of the cart.
   BehaviorSubject<Catalog> get catalog => _catalogSubject;
 
-  BehaviorSubject<bool> get loading => _loading;
-
   Sink<Null> get requestRefresh => _requestRefreshController.sink;
 
   @override
   void dispose() {
     _catalogSubject.close();
     _requestRefreshController.close();
-    _loading.close();
     _cartSubject.close();
     _cartAdditionController.close();
     super.dispose();
@@ -68,7 +61,6 @@ class Shop extends Bloc {
   void _fetchCatalog() {
     fetchCatalog().then((fetched) {
       _catalogSubject.add(fetched);
-      _loading.add(false);
     });
   }
 }
