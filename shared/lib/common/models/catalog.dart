@@ -10,7 +10,15 @@ Future<Catalog> fetchCatalog() {
   // this state present from application start (something unlikely to happen
   // in the real world).
   return new Future.delayed(
-      const Duration(milliseconds: 200), () => new Catalog._sample());
+      const Duration(milliseconds: 200), fetchCatalogSync);
+}
+
+/// Fetches the catalog synchronously.
+///
+/// This is much less realistic than [fetchCatalog] but acceptable if we want
+/// to focus on some other aspect with our explanation.
+Catalog fetchCatalogSync() {
+  return new Catalog._sample();
 }
 
 /// Updates the catalog of products asynchronously.
@@ -40,9 +48,9 @@ class Catalog {
 
   Catalog._sample() : _products = _sampleProducts;
 
-  UnmodifiableListView<Product> get products =>
-      new UnmodifiableListView<Product>(_products);
-
   // We're assuming that a catalog isn't empty after it's initialized.
   bool get loading => _products.isEmpty;
+
+  UnmodifiableListView<Product> get products =>
+      new UnmodifiableListView<Product>(_products);
 }

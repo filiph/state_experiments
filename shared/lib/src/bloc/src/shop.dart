@@ -7,7 +7,7 @@ import 'package:reactive_exploration/src/bloc/src/bloc.dart';
 import 'package:rxdart/subjects.dart';
 
 /// Adds [product] to cart. This will either update an existing [CartItem]
-/// in [shop] or add a new one at the end of the list.
+/// in [items] or add a new one at the end of the list.
 class CartAddition {
   final Product product;
   final int count;
