@@ -3,9 +3,10 @@ import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
+import 'package:reactive_exploration/src/scoped/main.dart' as scoped;
 
 void main() {
-  final flavor = Architecture.vanilla;
+  final flavor = Architecture.scoped;
 
   print("\n\n===== Running: $flavor =====\n\n");
 
@@ -22,6 +23,9 @@ void main() {
     case Architecture.bloc:
       bloc.main();
       return;
+    case Architecture.scoped:
+      scoped.main();
+      return;
   }
 }
 
@@ -30,4 +34,5 @@ enum Architecture {
   singleton,
   vanilla,
   valueNotifier,
+  scoped,
 }
