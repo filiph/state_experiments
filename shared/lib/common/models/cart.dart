@@ -4,7 +4,14 @@ import 'dart:math';
 import 'package:reactive_exploration/common/models/product.dart';
 
 class Cart {
-  List<CartItem> _items = <CartItem>[];
+  final List<CartItem> _items = <CartItem>[];
+
+  Cart();
+
+  /// Fills the cart with a sampling from the given products.
+  Cart.sample(Iterable<Product> products) {
+    _items.addAll(products.take(3).map((product) => new CartItem(1, product)));
+  }
 
   /// This is the current state of the cart.
   ///
@@ -28,6 +35,9 @@ class Cart {
     _updateCount(product, -count);
   }
 
+  @override
+  String toString() => "$items";
+
   void _updateCount(Product product, int difference) {
     if (difference == 0) return;
     for (int i = 0; i < _items.length; i++) {
@@ -45,9 +55,6 @@ class Cart {
     if (difference < 0) return;
     _items.add(new CartItem(max(difference, 0), product));
   }
-
-  @override
-  String toString() => "$items";
 }
 
 /// A single line in the cart.
