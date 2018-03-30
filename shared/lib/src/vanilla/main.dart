@@ -16,7 +16,7 @@ class CartPage extends StatefulWidget {
   CartPage(this._catalog, this._cart, {Key key}) : super(key: key);
 
   @override
-  State<CartPage> createState() => new _CartPageState(_catalog, _cart);
+  State<CartPage> createState() => new _CartPageState();
 }
 
 class MyApp extends StatefulWidget {
@@ -64,15 +64,11 @@ class MyHomePage extends StatefulWidget {
   MyHomePage(this._catalog, this._cart, {Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState(_catalog, _cart);
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _CartPageState extends State<CartPage> {
-  final Catalog _catalog;
-
-  final Cart _cart;
-
-  _CartPageState(this._catalog, this._cart);
+  _CartPageState();
 
   @override
   Widget build(BuildContext context) {
@@ -80,19 +76,13 @@ class _CartPageState extends State<CartPage> {
       appBar: new AppBar(
         title: new Text("Your Cart"),
       ),
-      body: new Text("Cart: ${_cart.items}"),
+      body: new Text("Cart: ${widget._cart.items}"),
     );
   }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  /// The list of products available for purchase.
-  final Catalog _catalog;
-
-  /// The current state of the user's cart.
-  final Cart _cart;
-
-  _MyHomePageState(this._catalog, this._cart);
+  _MyHomePageState();
 
   @override
   Widget build(BuildContext context) {
@@ -111,15 +101,15 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           new Container(
               padding: const EdgeInsets.all(24.0),
-              child: new Text("Cart: ${_cart.items}")),
+              child: new Text("Cart: ${widget._cart.items}")),
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
-              children: _catalog.products.map((product) {
+              children: widget._catalog.products.map((product) {
                 return new ProductSquare(
                   product: product,
                   onTap: () => setState(() {
-                        _cart.add(product);
+                        widget._cart.add(product);
                       }),
                 );
               }).toList(),
