@@ -84,7 +84,7 @@ class MyHomePage extends StatelessWidget {
             child: new StreamBuilder<Catalog>(
               stream: shop.catalog.stream,
               builder: (context, snapshot) => (!snapshot.hasData ||
-                      snapshot.data.loading)
+                      snapshot.data.isEmpty)
                   ? new Text("No data")
                   : new GridView.count(
                       crossAxisCount: 2,

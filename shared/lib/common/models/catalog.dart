@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:ui' show Color;
 
+import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 
 /// Fetches the catalog of products asynchronously.
@@ -16,16 +17,13 @@ Future<Catalog> fetchCatalog() {
 /// Fetches the catalog synchronously.
 ///
 /// This is much less realistic than [fetchCatalog] but acceptable if we want
-/// to focus on some other aspect with our explanation.
+/// to focus on some other aspect with our sample.
 Catalog fetchCatalogSync() {
   return new Catalog._sample();
 }
 
-/// Updates the catalog of products asynchronously.
+/// Updates an existing [catalog] of products asynchronously.
 Future<Null> updateCatalog(Catalog catalog) {
-  // This simulates a short delay so that we don't get too cocky about having
-  // this state present from application start (something unlikely to happen
-  // in the real world).
   return new Future.delayed(const Duration(milliseconds: 200), () {
     catalog._products.clear();
     catalog._products.addAll(Catalog._sampleProducts);
@@ -33,6 +31,7 @@ Future<Null> updateCatalog(Catalog catalog) {
 }
 
 class Catalog {
+  /// A listing of sample products.
   static const List<Product> _sampleProducts = const <Product>[
     const Product(42, "Sweater", const Color.fromRGBO(2, 90, 60, 1.0)),
     const Product(1337, "Shawl", const Color.fromRGBO(90, 250, 3, 1.0)),
@@ -48,9 +47,9 @@ class Catalog {
 
   Catalog._sample() : _products = _sampleProducts;
 
-  // We're assuming that a catalog isn't empty after it's initialized.
-  bool get loading => _products.isEmpty;
+  bool get isEmpty => _products.isEmpty;
 
+  /// An immutable listing of the products.
   UnmodifiableListView<Product> get products =>
       new UnmodifiableListView<Product>(_products);
 }

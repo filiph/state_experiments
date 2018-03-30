@@ -6,6 +6,7 @@ import 'package:reactive_exploration/common/models/product.dart';
 class Cart {
   final List<CartItem> _items = <CartItem>[];
 
+  /// Creates an empty cart.
   Cart();
 
   /// Fills the cart with a sampling from the given products.
@@ -58,8 +59,6 @@ class Cart {
 }
 
 /// A single line in the cart.
-///
-/// Uses [toString] to render itself nice in text.
 class CartItem {
   final int count;
   final Product product;
