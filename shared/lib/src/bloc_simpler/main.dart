@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:reactive_exploration/common/models/cart.dart';
+import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/src/bloc_simpler/src/shop.dart';

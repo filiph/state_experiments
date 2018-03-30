@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:ui' show Color;
 
-import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 
 /// Fetches the catalog of products asynchronously.

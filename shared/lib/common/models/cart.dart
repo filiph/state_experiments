@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:math';
 
+import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 
 class Cart {
@@ -56,15 +57,4 @@ class Cart {
     if (difference < 0) return;
     _items.add(new CartItem(max(difference, 0), product));
   }
-}
-
-/// A single line in the cart.
-class CartItem {
-  final int count;
-  final Product product;
-
-  const CartItem(this.count, this.product);
-
-  @override
-  String toString() => "${product.name} ✕ $count";
 }
