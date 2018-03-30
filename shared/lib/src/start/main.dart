@@ -84,7 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 return new ProductSquare(
                   product: product,
                   onTap: () {
-                    cart.add(product);
+                    // TODO: add the product to a cart
+                    print("$product added");
                   },
                 );
               }).toList(),
