@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() => runApp(new MyApp());
@@ -8,20 +9,6 @@ void main() => runApp(new MyApp());
 final Catalog catalog = fetchCatalogSync();
 
 final Cart cart = new Cart.sample(catalog.products);
-
-class CartPage extends StatelessWidget {
-  static const routeName = "/cart";
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Your Cart"),
-      ),
-      body: new Text("Cart: ${cart.items}"),
-    );
-  }
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -33,12 +20,13 @@ class MyApp extends StatelessWidget {
       ),
       home: new MyHomePage(),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage()
+        CartPage.routeName: (context) => new CartPage(cart)
       },
     );
   }
 }
 
+/// The sample app's main page
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -65,6 +53,7 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
+/// Displays the contents of the cart
 class CartContents extends StatelessWidget {
   @override
   Widget build(BuildContext context) => new Container(
@@ -72,6 +61,7 @@ class CartContents extends StatelessWidget {
       child: new Text("Cart: ${cart.items}"));
 }
 
+/// Displays a tappable grid of products
 class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => new GridView.count(
