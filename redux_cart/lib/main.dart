@@ -36,7 +36,7 @@ class MyHomePage extends StatelessWidget {
       store: store,
       child: new Scaffold(
         appBar: new AppBar(
-          title: new Text("Flutter Redux"),
+          title: new Text('Flutter Redux'),
           actions: <Widget>[
             new IconButton(
                 icon: new Icon(Icons.shopping_cart),
@@ -66,6 +66,7 @@ class CartContents extends StatelessWidget {
               padding: const EdgeInsets.all(24.0),
               child: new Text("Cart: $count"));
         });
+    // return new Text('DAVE');
   }
 }
 
@@ -90,6 +91,8 @@ class ProductGrid extends StatelessWidget {
                     crossAxisCount: 2,
                     children: snapshot.data.map((product) {
                       // TODO: How to pass a product into the cart?
+                      return new Text('BOB');
+                      /*
                       return new StoreConnector<Cart, Cart>(
                           converter: (store) => store.state,
                           builder: (context, cart) {
@@ -103,6 +106,7 @@ class ProductGrid extends StatelessWidget {
                               ),
                             );
                           });
+                          */
                     }).toList(),
                   );
             }

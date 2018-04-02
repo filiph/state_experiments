@@ -3,29 +3,14 @@ import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/models/product.dart';
+import 'package:reactive_exploration/src/redux/store.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 void main() => runApp(new MyApp());
 
-// Add - add a product to the cart
-enum Actions { Add }
-
-// The reducer, which takes the previous count and increments it in response
-// to an Increment action.
-Cart cartReducer(Cart state, dynamic action) {
-  if (action == Actions.Add) {
-    // Get the product to add to the cart here somehow
-    print('Adding product!');
-    return state;
-  }
-  return state;
-}
-
 final Catalog catalog = fetchCatalogSync();
-
-final Cart cart = new Cart.sample(catalog.products);
 
 class CartPage extends StatelessWidget {
   static const routeName = "/cart";
@@ -36,14 +21,16 @@ class CartPage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Your Cart"),
       ),
-      body: new Text("Cart: ${cart.items}"),
+      body: new StoreConnector<Cart, String>(
+        converter: (store) => store.state.items.toString(),
+        builder: (context, items) => new Text("Cart: $items"),
+      ),
     );
   }
 }
 
 class MyApp extends StatelessWidget {
-  final store = new Store<Cart>(cartReducer,
-      initialState: new Cart.sample(catalog.products));
+  final store = new Store<Cart>(cartReducer, initialState: new Cart());
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +93,8 @@ class ProductGrid extends StatelessWidget {
         children: catalog.products.map((product) {
           return new StoreConnector<Cart, Function(Product)>(
             // Dispatch the product to the reducer somehow
-            converter: (store) => (product) => store.dispatch(Actions.Add),
+            converter: (store) =>
+                (product) => store.dispatch(new AddProductAction(product)),
             builder: (context, callback) => new ProductSquare(
                   product: product,
                   onTap: () {
