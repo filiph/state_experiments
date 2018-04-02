@@ -7,6 +7,7 @@ import 'package:reactive_exploration/src/start/main.dart' as start;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
+import 'package:reactive_exploration/src/redux/main.dart' as redux;
 
 void main() {
   final flavor = Architecture.vanilla;
@@ -35,6 +36,9 @@ void main() {
     case Architecture.scoped:
       scoped.main();
       return;
+    case Architecture.redux:
+      redux.main();
+      return;
   }
 }
 
@@ -46,4 +50,5 @@ enum Architecture {
   start,
   vanilla,
   valueNotifier,
+  redux,
 }
