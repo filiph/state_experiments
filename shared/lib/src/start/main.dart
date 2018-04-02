@@ -5,29 +5,12 @@ import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() => runApp(new MyApp());
 
-final Cart cart = new Cart.sample(catalog.products);
-
 final Catalog catalog = fetchCatalogSync();
 
-class CartPage extends StatefulWidget {
+final Cart cart = new Cart.sample(catalog.products);
+
+class CartPage extends StatelessWidget {
   static const routeName = "/cart";
-
-  @override
-  State<CartPage> createState() => new _CartPageState();
-}
-
-class MyApp extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => new _MyAppState();
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  _CartPageState();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +23,7 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -56,9 +39,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  _MyHomePageState();
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -74,25 +55,35 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new Column(
         children: <Widget>[
-          new Container(
-              padding: const EdgeInsets.all(24.0),
-              child: new Text("Cart: ${cart.items}")),
+          new CartContents(),
           new Expanded(
-            child: new GridView.count(
-              crossAxisCount: 2,
-              children: catalog.products.map((product) {
-                return new ProductSquare(
-                  product: product,
-                  onTap: () {
-                    // TODO: add the product to a cart
-                    print("$product added");
-                  },
-                );
-              }).toList(),
-            ),
-          )
+            child: new ProductGrid(),
+          ),
         ],
       ),
     );
   }
+}
+
+class CartContents extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => new Container(
+      padding: const EdgeInsets.all(24.0),
+      child: new Text("Cart: ${cart.items}"));
+}
+
+class ProductGrid extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => new GridView.count(
+        crossAxisCount: 2,
+        children: catalog.products.map((product) {
+          return new ProductSquare(
+            product: product,
+            onTap: () {
+              // TODO: add the product to a cart
+              print("$product added");
+            },
+          );
+        }).toList(),
+      );
 }
