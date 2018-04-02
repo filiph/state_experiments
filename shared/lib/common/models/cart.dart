@@ -15,6 +15,11 @@ class Cart {
     _items.addAll(products.take(3).map((product) => new CartItem(1, product)));
   }
 
+  /// Creates a new Cart from an old Cart
+  Cart.clone(Cart cart) {
+    _items.addAll(cart._items);
+  }
+
   /// This is the current state of the cart.
   ///
   /// This is a list because users expect their cart items to be in the same
