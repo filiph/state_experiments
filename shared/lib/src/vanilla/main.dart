@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() => runApp(new MyApp());
@@ -22,38 +22,6 @@ class CartPage extends StatefulWidget {
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  Catalog _catalog = new Catalog.empty();
-  final Cart _cart = new Cart();
-
-  _MyAppState();
-
-  @override
-  void initState() {
-    super.initState();
-
-    updateCatalog(_catalog).then((_) => setState(() {
-          // Calling setState with nothing at all in it is code smell.
-          // But this is also the easiest way to do it without introducing more
-          // advanced techniques.
-        }));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Vanilla',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(_catalog, _cart),
-      routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(_catalog, _cart)
-      },
-    );
-  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -81,6 +49,38 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
+class _MyAppState extends State<MyApp> {
+  Catalog _catalog = new Catalog.empty();
+  final Cart _cart = new Cart();
+
+  _MyAppState();
+
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'Vanilla',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: new MyHomePage(_catalog, _cart),
+      routes: <String, WidgetBuilder>{
+        CartPage.routeName: (context) => new CartPage(_catalog, _cart)
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    updateCatalog(_catalog).then((_) => setState(() {
+          // Calling setState with nothing at all in it is code smell.
+          // But this is also the easiest way to do it without introducing more
+          // advanced techniques.
+        }));
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState();
 
@@ -90,11 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text("Vanilla"),
         actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CartPage.routeName);
-              }),
+          new CartButton(
+            itemCount: widget._cart.items.length,
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartPage.routeName);
+            },
+          )
         ],
       ),
       body: new Column(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/src/bloc_simpler/src/shop.dart';
 
@@ -64,11 +65,14 @@ class MyHomePage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Simpler Bloc"),
         actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CartPage.routeName);
-              }),
+          new StreamBuilder<List<CartItem>>(
+              stream: cart.items.stream,
+              builder: (context, snapshot) => new CartButton(
+                    itemCount: snapshot.data.length,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(CartPage.routeName);
+                    },
+                  )),
         ],
       ),
       body: new Column(

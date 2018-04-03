@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
@@ -57,11 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: new Text("Singleton"),
         actions: <Widget>[
           // The shopping cart button in the app bar
-          new IconButton(
-              icon: new Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CartPage.routeName);
-              }),
+          new CartButton(
+            itemCount: _cart.items.length,
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartPage.routeName);
+            },
+          ),
         ],
       ),
       body: new Column(

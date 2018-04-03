@@ -4,6 +4,7 @@ import 'package:reactive_exploration/src/bloc_simpler/main.dart'
 import 'package:reactive_exploration/src/scoped/main.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
+import 'package:reactive_exploration/src/start/main_blob.dart' as start_blob;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
@@ -17,6 +18,9 @@ void main() {
   switch (flavor) {
     case Architecture.start:
       start.main();
+      return;
+    case Architecture.startBlob:
+      start_blob.main();
       return;
     case Architecture.singleton:
       singleton.main();
@@ -48,6 +52,7 @@ enum Architecture {
   scoped,
   singleton,
   start,
+  startBlob,
   vanilla,
   valueNotifier,
   redux,

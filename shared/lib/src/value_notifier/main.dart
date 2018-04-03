@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() {
@@ -127,11 +128,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text("ValueNotifier"),
         actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CartPage.routeName);
-              }),
+          new CartButton(
+            itemCount: _cart.items.length,
+            onPressed: () {
+              Navigator.of(context).pushNamed(CartPage.routeName);
+            },
+          )
         ],
       ),
       body: new Column(

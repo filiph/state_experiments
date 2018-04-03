@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/src/redux/store.dart';
@@ -57,11 +58,15 @@ class MyHomePage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Start"),
         actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CartPage.routeName);
-              }),
+          new StoreConnector<Cart, int>(
+            converter: (store) => store.state.items.length,
+            builder: (context, count) => new CartButton(
+                  itemCount: count,
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartPage.routeName);
+                  },
+                ),
+          ),
         ],
       ),
       body: new Column(

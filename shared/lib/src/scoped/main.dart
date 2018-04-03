@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 import 'package:scoped_model/scoped_model.dart';
@@ -53,11 +54,14 @@ class ScopedHomePage extends StatelessWidget {
       appBar: new AppBar(
         title: new Text('Scoped'),
         actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.shopping_cart),
-              onPressed: () {
-                Navigator.of(context).pushNamed(CartPage.routeName);
-              }),
+          new ScopedModelDescendant<CartModel>(
+            builder: (context, child, model) => new CartButton(
+                  itemCount: model.items.length,
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartPage.routeName);
+                  },
+                ),
+          )
         ],
       ),
       body: new Column(
