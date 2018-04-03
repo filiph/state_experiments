@@ -4,6 +4,9 @@ import 'dart:ui' show Color;
 
 import 'package:reactive_exploration/common/models/product.dart';
 
+/// Hard-coded catalog of [Product]s.
+final Catalog catalog = fetchCatalogSync();
+
 /// Fetches the catalog of products asynchronously.
 Future<Catalog> fetchCatalog() {
   // This simulates a short delay so that we don't get too cocky about having

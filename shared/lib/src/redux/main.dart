@@ -11,8 +11,6 @@ import 'package:redux/redux.dart';
 
 void main() => runApp(new MyApp());
 
-final Catalog catalog = fetchCatalogSync();
-
 class CartPage extends StatelessWidget {
   static const routeName = "/cart";
 

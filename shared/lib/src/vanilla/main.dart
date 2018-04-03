@@ -9,11 +9,9 @@ void main() => runApp(new MyApp());
 class CartPage extends StatefulWidget {
   static const routeName = "/cart";
 
-  final Catalog _catalog;
-
   final Cart _cart;
 
-  CartPage(this._catalog, this._cart, {Key key}) : super(key: key);
+  CartPage(this._cart, {Key key}) : super(key: key);
 
   @override
   State<CartPage> createState() => new _CartPageState();
@@ -25,11 +23,9 @@ class MyApp extends StatefulWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final Catalog _catalog;
-
   final Cart _cart;
 
-  MyHomePage(this._catalog, this._cart, {Key key}) : super(key: key);
+  MyHomePage(this._cart, {Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -50,7 +46,6 @@ class _CartPageState extends State<CartPage> {
 }
 
 class _MyAppState extends State<MyApp> {
-  Catalog _catalog = new Catalog.empty();
   final Cart _cart = new Cart();
 
   _MyAppState();
@@ -62,22 +57,11 @@ class _MyAppState extends State<MyApp> {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(_catalog, _cart),
+      home: new MyHomePage(_cart),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(_catalog, _cart)
+        CartPage.routeName: (context) => new CartPage(_cart)
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    updateCatalog(_catalog).then((_) => setState(() {
-          // Calling setState with nothing at all in it is code smell.
-          // But this is also the easiest way to do it without introducing more
-          // advanced techniques.
-        }));
   }
 }
 
@@ -106,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
-              children: widget._catalog.products.map((product) {
+              children: catalog.products.map((product) {
                 return new ProductSquare(
                   product: product,
                   onTap: () => setState(() {

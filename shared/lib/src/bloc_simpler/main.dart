@@ -6,8 +6,6 @@ import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/src/bloc_simpler/src/shop.dart';
 
-final catalog = fetchCatalogSync();
-
 void main() {
   final cart = new CartBloc();
 

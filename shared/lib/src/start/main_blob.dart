@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
@@ -8,8 +7,7 @@ import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() => runApp(new MyApp());
 
-Catalog _catalog = fetchCatalogSync();
-final Cart _cart = new Cart.sample(_catalog.products);
+final Cart _cart = new Cart.sample(catalog.products);
 
 class MyApp extends StatelessWidget {
   @override
@@ -54,7 +52,7 @@ class MyHomePage extends StatelessWidget {
                 new Expanded(
                   child: new GridView.count(
                     crossAxisCount: 2,
-                    children: _catalog.products.map((product) {
+                    children: catalog.products.map((product) {
                       return new ProductSquare(
                         product: product,
                         onTap: () => Scaffold.of(context).showSnackBar(

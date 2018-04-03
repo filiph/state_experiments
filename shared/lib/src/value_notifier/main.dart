@@ -6,12 +6,9 @@ import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() {
-  final catalogNotifier = new ValueNotifier(new Catalog.empty());
   final cartNotifier = new ValueNotifier(new Cart());
-  fetchCatalog().then((fetched) => catalogNotifier.value = fetched);
 
   runApp(new MyApp(
-    catalogNotifier: catalogNotifier,
     cartNotifier: cartNotifier,
   ));
 }
@@ -31,12 +28,10 @@ class CartPage extends StatefulWidget {
 }
 
 class MyApp extends StatelessWidget {
-  final ValueNotifier<Catalog> catalogNotifier;
   final ValueNotifier<Cart> cartNotifier;
 
   MyApp({
     Key key,
-    @required this.catalogNotifier,
     @required this.cartNotifier,
   }) : super(key: key);
 
@@ -47,8 +42,7 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(
-          catalogNotifier: catalogNotifier, cartNotifier: cartNotifier),
+      home: new MyHomePage(cartNotifier: cartNotifier),
       routes: <String, WidgetBuilder>{
         CartPage.routeName: (context) =>
             new CartPage(cartNotifier: cartNotifier)
@@ -58,19 +52,15 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  final ValueNotifier<Catalog> catalogNotifier;
-
   final ValueNotifier<Cart> cartNotifier;
 
   MyHomePage({
-    @required this.catalogNotifier,
     @required this.cartNotifier,
     Key key,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() =>
-      new _MyHomePageState(catalogNotifier, cartNotifier);
+  _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _CartPageState extends State<CartPage> {
@@ -107,19 +97,11 @@ class _CartPageState extends State<CartPage> {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final ValueNotifier<Catalog> catalogNotifier;
-
-  Catalog _catalog;
-
-  final ValueNotifier<Cart> cartNotifier;
-
   Cart _cart;
 
-  _MyHomePageState(this.catalogNotifier, this.cartNotifier) {
-    catalogNotifier.addListener(_catalogUpdatedHandler);
-    _catalog = catalogNotifier.value;
-    cartNotifier.addListener(_cartUpdateHandler);
-    _cart = cartNotifier.value;
+  _MyHomePageState() {
+    widget.cartNotifier.addListener(_cartUpdateHandler);
+    _cart = widget.cartNotifier.value;
   }
 
   @override
@@ -144,12 +126,12 @@ class _MyHomePageState extends State<MyHomePage> {
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
-              children: _catalog.products.map((product) {
+              children: catalog.products.map((product) {
                 return new ProductSquare(
                   product: product,
                   onTap: () => setState(() {
                         _cart.add(product);
-                        cartNotifier.value = _cart;
+                        widget.cartNotifier.value = _cart;
                       }),
                 );
               }).toList(),
@@ -162,20 +144,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    catalogNotifier.removeListener(_catalogUpdatedHandler);
-    cartNotifier.removeListener(_cartUpdateHandler);
+    widget.cartNotifier.removeListener(_cartUpdateHandler);
     super.dispose();
   }
 
   void _cartUpdateHandler() {
     setState(() {
-      _cart = cartNotifier.value;
-    });
-  }
-
-  void _catalogUpdatedHandler() {
-    setState(() {
-      _catalog = catalogNotifier.value;
+      _cart = widget.cartNotifier.value;
     });
   }
 }
