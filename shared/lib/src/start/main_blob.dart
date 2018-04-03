@@ -8,7 +8,7 @@ import 'package:reactive_exploration/common/widgets/product_square.dart';
 void main() => runApp(new MyApp());
 
 Catalog _catalog = fetchCatalogSync();
-final Cart _cart = new Cart();
+final Cart _cart = new Cart.sample(_catalog.products);
 
 class MyApp extends StatelessWidget {
   @override

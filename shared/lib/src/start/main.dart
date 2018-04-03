@@ -69,10 +69,8 @@ class ProductGrid extends StatelessWidget {
         children: catalog.products.map((product) {
           return new ProductSquare(
             product: product,
-            onTap: () {
-              // TODO: add the product to a cart
-              print("$product added");
-            },
+            onTap: () => Scaffold.of(context).showSnackBar(
+                new SnackBar(content: new Text("${product.name} tapped"))),
           );
         }).toList(),
       );
