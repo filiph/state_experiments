@@ -2,31 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() => runApp(new MyApp());
 
 Catalog _catalog = new Catalog.empty();
-
 final Cart _cart = new Cart();
-
-class CartPage extends StatefulWidget {
-  static const routeName = "/cart";
-
-  CartPage({Key key}) : super(key: key);
-
-  @override
-  State<CartPage> createState() => new _CartPageState();
-}
 
 class MyApp extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _MyAppState();
+  createState() => new MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  _MyAppState();
-
+class MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
@@ -47,31 +36,15 @@ class _MyAppState extends State<MyApp> {
       ),
       home: new MyHomePage(),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage()
+        CartPage.routeName: (context) => new CartPage(_cart)
       },
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
-
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  _CartPageState();
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Your Cart"),
-      ),
-      body: new Text("Cart: ${_cart.items}"),
-    );
-  }
+  createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -83,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: new AppBar(
         title: new Text("Singleton"),
         actions: <Widget>[
+          // The shopping cart button in the app bar
           new IconButton(
               icon: new Icon(Icons.shopping_cart),
               onPressed: () {
@@ -92,9 +66,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new Column(
         children: <Widget>[
+          // Description of the cart's contents
           new Container(
               padding: const EdgeInsets.all(24.0),
               child: new Text("Cart: ${_cart.items}")),
+          // The product grid
           new Expanded(
             child: new GridView.count(
               crossAxisCount: 2,
