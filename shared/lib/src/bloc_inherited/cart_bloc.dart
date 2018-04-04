@@ -18,11 +18,13 @@ class CartAddition {
 class CartBloc extends InheritedWidget {
   final Cart _cart = new Cart();
 
-  final BehaviorSubject<List<CartItem>> _items= new BehaviorSubject<List<CartItem>>();
+  final BehaviorSubject<List<CartItem>> _items =
+      new BehaviorSubject<List<CartItem>>();
 
-  final BehaviorSubject<int> _itemCount= new BehaviorSubject<int>();
+  final BehaviorSubject<int> _itemCount = new BehaviorSubject<int>();
 
-  final StreamController<CartAddition> _cartAdditionController=  new StreamController<CartAddition>();
+  final StreamController<CartAddition> _cartAdditionController =
+      new StreamController<CartAddition>();
 
   CartBloc({
     Key key,
