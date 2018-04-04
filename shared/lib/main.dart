@@ -1,6 +1,8 @@
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
 import 'package:reactive_exploration/src/bloc_simpler/main.dart'
     as bloc_simpler;
+import 'package:reactive_exploration/src/bloc_inherited/main.dart'
+    as bloc_inherited;
 import 'package:reactive_exploration/src/scoped/main.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
@@ -39,6 +41,9 @@ void main() {
     case Architecture.bloc:
       bloc.main();
       return;
+    case Architecture.blocInherited:
+      bloc_inherited.main();
+      return;
     case Architecture.blocSimpler:
       bloc_simpler.main();
       return;
@@ -53,6 +58,7 @@ void main() {
 
 enum Architecture {
   bloc,
+  blocInherited,
   blocSimpler,
   scoped,
   singleton,
