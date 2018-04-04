@@ -2,116 +2,83 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
+import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 
 void main() {
-  final cartNotifier = new ValueNotifier(new Cart());
+  final cartObservable = new CartObservable(new Cart());
 
   runApp(new MyApp(
-    cartNotifier: cartNotifier,
+    cartObservable: cartObservable,
   ));
 }
 
-class CartPage extends StatefulWidget {
-  static const routeName = "/cart";
+class CartObservable extends ValueNotifier<Cart> {
+  CartObservable(Cart value) : super(value);
 
-  final ValueNotifier<Cart> cartNotifier;
-
-  CartPage({
-    Key key,
-    @required this.cartNotifier,
-  }) : super(key: key);
-
-  @override
-  State<CartPage> createState() => new _CartPageState(cartNotifier);
+  void add(Product product) {
+    value.add(product);
+    notifyListeners();
+  }
 }
 
 class MyApp extends StatelessWidget {
-  final ValueNotifier<Cart> cartNotifier;
+  final CartObservable cartObservable;
 
   MyApp({
     Key key,
-    @required this.cartNotifier,
+    @required this.cartObservable,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'ValueNotifier',
+      title: 'Start',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(cartNotifier: cartNotifier),
+      home: new MyHomePage(
+        cartObservable: cartObservable,
+      ),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) =>
-            new CartPage(cartNotifier: cartNotifier)
+        CartPage.routeName: (context) => new CartPage(cartObservable.value)
       },
     );
   }
 }
 
+/// The sample app's main page
 class MyHomePage extends StatefulWidget {
-  final ValueNotifier<Cart> cartNotifier;
+  final CartObservable cartObservable;
 
   MyHomePage({
-    @required this.cartNotifier,
     Key key,
+    @required this.cartObservable,
   }) : super(key: key);
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  MyHomePageState createState() {
+    return new MyHomePageState();
+  }
 }
 
-class _CartPageState extends State<CartPage> {
-  final ValueNotifier<Cart> cartNotifier;
-
-  Cart _cart;
-
-  _CartPageState(this.cartNotifier) {
-    cartNotifier.addListener(_cartUpdateHandler);
-    _cart = cartNotifier.value;
+class MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    widget.cartObservable.addListener(myListener);
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Your Cart"),
-      ),
-      body: new Text("Cart: ${_cart.items}"),
-    );
-  }
-
-  @override
-  void dispose() {
-    cartNotifier.removeListener(_cartUpdateHandler);
-    super.dispose();
-  }
-
-  void _cartUpdateHandler() {
-    setState(() {
-      _cart = cartNotifier.value;
-    });
-  }
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  Cart _cart;
-
-  _MyHomePageState() {
-    widget.cartNotifier.addListener(_cartUpdateHandler);
-    _cart = widget.cartNotifier.value;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("ValueNotifier"),
+        title: new Text("Start"),
         actions: <Widget>[
           new CartButton(
-            itemCount: _cart.items.length,
+            itemCount: widget.cartObservable.value.itemCount,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
             },
@@ -120,37 +87,60 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: new Column(
         children: <Widget>[
-          new Container(
-              padding: const EdgeInsets.all(24.0),
-              child: new Text("Cart: ${_cart.items}")),
+          new CartContents(
+            cartObservable: widget.cartObservable,
+          ),
           new Expanded(
-            child: new GridView.count(
-              crossAxisCount: 2,
-              children: catalog.products.map((product) {
-                return new ProductSquare(
-                  product: product,
-                  onTap: () => setState(() {
-                        _cart.add(product);
-                        widget.cartNotifier.value = _cart;
-                      }),
-                );
-              }).toList(),
+            child: new ProductGrid(
+              cartObservable: widget.cartObservable,
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
-  @override
-  void dispose() {
-    widget.cartNotifier.removeListener(_cartUpdateHandler);
-    super.dispose();
-  }
-
-  void _cartUpdateHandler() {
+  void myListener() {
     setState(() {
-      _cart = widget.cartNotifier.value;
+      // Nothing
     });
   }
+}
+
+/// Displays the contents of the cart
+class CartContents extends StatelessWidget {
+  final CartObservable cartObservable;
+
+  CartContents({
+    Key key,
+    @required this.cartObservable,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => new Container(
+      padding: const EdgeInsets.all(24.0),
+      child: new Text("Cart: ${cartObservable.value.items}"));
+}
+
+/// Displays a tappable grid of products
+class ProductGrid extends StatelessWidget {
+  final CartObservable cartObservable;
+
+  ProductGrid({
+    Key key,
+    @required this.cartObservable,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => new GridView.count(
+        crossAxisCount: 2,
+        children: catalog.products.map((product) {
+          return new ProductSquare(
+            product: product,
+            onTap: () {
+              cartObservable.add(product);
+            },
+          );
+        }).toList(),
+      );
 }
