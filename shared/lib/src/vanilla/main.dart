@@ -3,6 +3,7 @@ import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
+import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() => runApp(new MyApp());
 
@@ -54,9 +55,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Vanilla',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: appTheme,
       home: new MyHomePage(_cart),
       routes: <String, WidgetBuilder>{
         CartPage.routeName: (context) => new CartPage(_cart)

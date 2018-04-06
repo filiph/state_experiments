@@ -4,6 +4,7 @@ import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/models/product.dart';
+import 'package:reactive_exploration/common/widgets/theme.dart';
 import 'package:reactive_exploration/src/redux/store.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
@@ -37,9 +38,7 @@ class MyApp extends StatelessWidget {
       store: store,
       child: new MaterialApp(
         title: 'Start',
-        theme: new ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: appTheme,
         home: new MyHomePage(),
         routes: <String, WidgetBuilder>{
           CartPage.routeName: (context) => new CartPage()

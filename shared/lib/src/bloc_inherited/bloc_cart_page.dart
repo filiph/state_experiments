@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/src/bloc_inherited/cart_bloc.dart';
 

@@ -6,6 +6,7 @@ import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
+import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() {
   final cartObservable = new CartObservable(new Cart());
@@ -36,9 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'ValueNotifer',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: appTheme,
       home: new MyHomePage(
         cartObservable: cartObservable,
       ),

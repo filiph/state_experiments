@@ -3,6 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
+import 'package:reactive_exploration/common/widgets/theme.dart';
 import 'package:reactive_exploration/src/bloc/src/shop.dart';
 
 void main() {
@@ -41,9 +42,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Bloc',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: appTheme,
       home: new MyHomePage(shop: shop),
       routes: <String, WidgetBuilder>{
         CartPage.routeName: (context) => new CartPage(shop: shop)

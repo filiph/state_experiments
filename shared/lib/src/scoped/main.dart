@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
+import 'package:reactive_exploration/common/widgets/theme.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
@@ -35,9 +36,7 @@ class MyApp extends StatelessWidget {
       model: new CartModel(),
       child: new MaterialApp(
         title: 'Scoped',
-        theme: new ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: appTheme,
         home: new ScopedHomePage(),
         routes: <String, WidgetBuilder>{
           CartPage.routeName: (context) => new CartPage()

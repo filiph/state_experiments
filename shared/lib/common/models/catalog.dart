@@ -35,12 +35,13 @@ Future<Null> updateCatalog(Catalog catalog) {
 class Catalog {
   /// A listing of sample products.
   static const List<Product> _sampleProducts = const <Product>[
-    const Product(42, "Sweater", const Color.fromRGBO(2, 90, 60, 1.0)),
-    const Product(1337, "Shawl", const Color.fromRGBO(90, 250, 3, 1.0)),
-    const Product(1024, "Socks", const Color.fromRGBO(250, 240, 16, 1.0)),
-    const Product(123, "Jacket", const Color.fromRGBO(20, 0, 250, 1.0)),
-    const Product(201805, "Hat", const Color.fromRGBO(100, 100, 250, 1.0)),
-    const Product(321, "Tuxedo", const Color.fromRGBO(250, 250, 0, 1.0)),
+    const Product(42, "Sweater", const Color(0xFF536DFE)),
+    const Product(1024, "Socks", const Color(0xFFFFD500)),
+    const Product(1337, "Shawl", const Color(0xFF1CE8B5)),
+    const Product(123, "Jacket", const Color(0xFFFF6C00)),
+    const Product(201805, "Hat", const Color(0xFF574DDD)),
+    const Product(128, "Hoodie", const Color(0xFFABD0F2)),
+    const Product(321, "Tuxedo", const Color(0xFF8DA0FC)),
   ];
 
   final List<Product> _products;

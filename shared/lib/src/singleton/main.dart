@@ -4,6 +4,7 @@ import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
+import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() => runApp(new MyApp());
 
@@ -14,9 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Singleton',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: appTheme,
       home: new MyHomePage(),
       routes: <String, WidgetBuilder>{
         CartPage.routeName: (context) => new CartPage(_cart)
