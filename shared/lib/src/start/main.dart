@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
         title: new Text("Start"),
         actions: <Widget>[
           new CartButton(
-            itemCount: cart.items.length,
+            itemCount: cart.itemCount,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
             },

@@ -56,7 +56,7 @@ class MyHomePage extends StatelessWidget {
         title: new Text("Start"),
         actions: <Widget>[
           new StoreConnector<Cart, int>(
-            converter: (store) => store.state.items.length,
+            converter: (store) => store.state.itemCount,
             builder: (context, count) => new CartButton(
                   itemCount: count,
                   onPressed: () {

@@ -56,7 +56,7 @@ class MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           // The shopping cart button in the app bar
           new CartButton(
-            itemCount: widget.cart.items.length,
+            itemCount: widget.cart.itemCount,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
             },

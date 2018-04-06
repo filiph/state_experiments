@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: new Text("Vanilla"),
         actions: <Widget>[
           new CartButton(
-            itemCount: widget._cart.items.length,
+            itemCount: widget._cart.itemCount,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
             },

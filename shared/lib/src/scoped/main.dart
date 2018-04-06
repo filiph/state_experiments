@@ -15,6 +15,7 @@ void main() => runApp(new MyApp());
 class CartModel extends Model {
   final _cart = new Cart();
   get items => _cart.items;
+  get itemCount => _cart.itemCount;
 
   void add(Product product) {
     _cart.add(product);
@@ -55,7 +56,7 @@ class ScopedHomePage extends StatelessWidget {
         actions: <Widget>[
           new ScopedModelDescendant<CartModel>(
             builder: (context, child, model) => new CartButton(
-                  itemCount: model.items.length,
+                  itemCount: model.itemCount,
                   onPressed: () {
                     Navigator.of(context).pushNamed(CartPage.routeName);
                   },
