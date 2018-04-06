@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Start',
+      title: 'ValueNotifer',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -75,7 +75,7 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Start"),
+        title: new Text("ValueNotifer"),
         actions: <Widget>[
           new CartButton(
             itemCount: widget.cartObservable.value.itemCount,
