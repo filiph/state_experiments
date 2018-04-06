@@ -1,5 +1,4 @@
-import 'package:reactive_exploration/src/bloc_inherited/main.dart'
-    as bloc_inherited;
+import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
 import 'package:reactive_exploration/src/scoped/main.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
@@ -35,8 +34,8 @@ void main() {
     case Architecture.valueNotifier:
       value_notifier.main();
       return;
-    case Architecture.blocInherited:
-      bloc_inherited.main();
+    case Architecture.bloc:
+      bloc.main();
       return;
     case Architecture.scoped:
       scoped.main();
@@ -48,7 +47,7 @@ void main() {
 }
 
 enum Architecture {
-  blocInherited,
+  bloc,
   scoped,
   singleton,
   start,

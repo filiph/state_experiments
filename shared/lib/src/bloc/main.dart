@@ -3,8 +3,8 @@ import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
-import 'package:reactive_exploration/src/bloc_inherited/bloc_cart_page.dart';
-import 'package:reactive_exploration/src/bloc_inherited/cart_bloc.dart';
+import 'package:reactive_exploration/src/bloc/bloc_cart_page.dart';
+import 'package:reactive_exploration/src/bloc/cart_bloc.dart';
 
 void main() {
   runApp(new MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new CartBloc(
       child: new MaterialApp(
-        title: 'Start',
+        title: 'Bloc',
         theme: appTheme,
         home: new MyHomePage(),
         routes: <String, WidgetBuilder>{
@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
     final cartBloc = CartBloc.of(context);
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Start"),
+        title: new Text("Bloc"),
         actions: <Widget>[
           new StreamBuilder<int>(
             stream: cartBloc.itemCount.stream,
