@@ -8,7 +8,7 @@ import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() => runApp(new MyApp());
 
-final Cart cart = new Cart.sample(catalog.products);
+final Cart cart = new Cart();
 
 class MyApp extends StatelessWidget {
   @override
@@ -40,14 +40,7 @@ class MyHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: new Column(
-        children: <Widget>[
-          new CartContents(),
-          new Expanded(
-            child: new ProductGrid(),
-          ),
-        ],
-      ),
+      body:  new ProductGrid(),
     );
   }
 }

@@ -42,6 +42,7 @@ class Catalog {
     const Product(201805, "Hat", const Color(0xFF574DDD)),
     const Product(128, "Hoodie", const Color(0xFFABD0F2)),
     const Product(321, "Tuxedo", const Color(0xFF8DA0FC)),
+    const Product(1003, "Shirt", const Color(0xFF1CE8B5)),
   ];
 
   final List<Product> _products;

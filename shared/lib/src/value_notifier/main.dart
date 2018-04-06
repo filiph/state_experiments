@@ -73,30 +73,20 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("ValueNotifer"),
-        actions: <Widget>[
-          new CartButton(
-            itemCount: widget.cartObservable.value.itemCount,
-            onPressed: () {
-              Navigator.of(context).pushNamed(CartPage.routeName);
-            },
-          )
-        ],
-      ),
-      body: new Column(
-        children: <Widget>[
-          new CartContents(
-            cartObservable: widget.cartObservable,
-          ),
-          new Expanded(
-            child: new ProductGrid(
-              cartObservable: widget.cartObservable,
-            ),
-          ),
-        ],
-      ),
-    );
+        appBar: new AppBar(
+          title: new Text("ValueNotifer"),
+          actions: <Widget>[
+            new CartButton(
+              itemCount: widget.cartObservable.value.itemCount,
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartPage.routeName);
+              },
+            )
+          ],
+        ),
+        body: new ProductGrid(
+          cartObservable: widget.cartObservable,
+        ));
   }
 
   void myListener() {

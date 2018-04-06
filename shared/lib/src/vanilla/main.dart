@@ -70,37 +70,29 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Vanilla"),
-        actions: <Widget>[
-          new CartButton(
-            itemCount: widget._cart.itemCount,
-            onPressed: () {
-              Navigator.of(context).pushNamed(CartPage.routeName);
-            },
-          )
-        ],
-      ),
-      body: new Column(
-        children: <Widget>[
-          new Container(
-              padding: const EdgeInsets.all(24.0),
-              child: new Text("Cart: ${widget._cart.items}")),
-          new Expanded(
-            child: new GridView.count(
-              crossAxisCount: 2,
-              children: catalog.products.map((product) {
-                return new ProductSquare(
-                  product: product,
-                  onTap: () => setState(() {
-                        widget._cart.add(product);
-                      }),
-                );
-              }).toList(),
-            ),
-          )
-        ],
-      ),
-    );
+        appBar: new AppBar(
+          title: new Text("Vanilla"),
+          actions: <Widget>[
+            new CartButton(
+              itemCount: widget._cart.itemCount,
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartPage.routeName);
+              },
+            )
+          ],
+        ),
+        body: new Builder(
+          builder: (context) => new GridView.count(
+                crossAxisCount: 2,
+                children: catalog.products.map((product) {
+                  return new ProductSquare(
+                    product: product,
+                    onTap: () => setState(() {
+                          widget._cart.add(product);
+                        }),
+                  );
+                }).toList(),
+              ),
+        ));
   }
 }

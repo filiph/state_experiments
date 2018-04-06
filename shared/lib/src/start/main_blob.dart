@@ -8,13 +8,13 @@ import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() => runApp(new MyApp());
 
-final Cart _cart = new Cart.sample(catalog.products);
+final Cart _cart = new Cart();
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Singleton',
+      title: 'Start',
       theme: appTheme,
       home: new MyHomePage(),
       routes: <String, WidgetBuilder>{
@@ -29,7 +29,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Singleton"),
+        title: new Text("Start"),
         actions: <Widget>[
           // The shopping cart button in the app bar
           new CartButton(
@@ -41,27 +41,15 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
       body: new Builder(
-        builder: (context) => new Column(
-              children: <Widget>[
-                // Description of the cart's contents
-                new Container(
-                    padding: const EdgeInsets.all(24.0),
-                    child: new Text("Cart: ${_cart.items}")),
-                // The product grid
-                new Expanded(
-                  child: new GridView.count(
-                    crossAxisCount: 2,
-                    children: catalog.products.map((product) {
-                      return new ProductSquare(
-                        product: product,
-                        onTap: () => Scaffold.of(context).showSnackBar(
-                            new SnackBar(
-                                content: new Text("${product.name} tapped"))),
-                      );
-                    }).toList(),
-                  ),
-                )
-              ],
+        builder: (context) => new GridView.count(
+              crossAxisCount: 2,
+              children: catalog.products.map((product) {
+                return new ProductSquare(
+                  product: product,
+                  onTap: () => Scaffold.of(context).showSnackBar(new SnackBar(
+                      content: new Text("${product.name} tapped"))),
+                );
+              }).toList(),
             ),
       ),
     );

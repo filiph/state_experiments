@@ -63,19 +63,8 @@ class MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: new Builder(
-        builder: (context) => new Column(
-          children: <Widget>[
-            // Description of the cart's contents
-            new Container(
-                padding: const EdgeInsets.all(24.0),
-                child: new Text("Cart: ${widget.cart.items}")),
-            // The product grid
-            new Expanded(
-              child: new ProductGrid(cart: widget.cart,),
-            )
-          ],
-        ),
+      body: new ProductGrid(
+        cart: widget.cart,
       ),
     );
   }
@@ -85,8 +74,8 @@ class ProductGrid extends StatefulWidget {
   final Cart cart;
 
   ProductGrid({
-      Key key,
-      @required this.cart,
+    Key key,
+    @required this.cart,
   }) : super(key: key);
 
   @override
