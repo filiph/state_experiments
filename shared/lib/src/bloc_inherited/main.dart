@@ -38,6 +38,7 @@ class MyHomePage extends StatelessWidget {
         actions: <Widget>[
           new StreamBuilder<int>(
             stream: cartBloc.itemCount.stream,
+            initialData: 0,
             builder: (context, snapshot) => new CartButton(
                   itemCount: snapshot.data,
                   onPressed: () {
@@ -47,29 +48,8 @@ class MyHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: new Column(
-        children: <Widget>[
-          new CartContents(),
-          new Expanded(
-            child: new ProductGrid(),
-          ),
-        ],
-      ),
+      body: new ProductGrid(),
     );
-  }
-}
-
-/// Displays the contents of the cart
-class CartContents extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final cartBloc = CartBloc.of(context);
-    return new Container(
-        padding: const EdgeInsets.all(24.0),
-        child: new StreamBuilder<List<CartItem>>(
-            stream: cartBloc.items.stream,
-            builder: (context, snapshot) =>
-                new Text("Cart: ${snapshot.data}")));
   }
 }
 
