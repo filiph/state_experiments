@@ -10,7 +10,7 @@ import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 
 void main() {
-  final flavor = Architecture.vanilla;
+  final flavor = Architecture.start;
 
   print("\n\n===== Running: $flavor =====\n\n");
 
