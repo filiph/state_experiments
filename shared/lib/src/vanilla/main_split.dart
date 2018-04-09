@@ -68,7 +68,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class ProductGrid extends StatefulWidget {
+class ProductGrid extends StatelessWidget {
   final Cart cart;
   final Function(Product) updateProduct;
 
@@ -79,18 +79,13 @@ class ProductGrid extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ProductGridState createState() => new _ProductGridState();
-}
-
-class _ProductGridState extends State<ProductGrid> {
-  @override
   Widget build(BuildContext context) {
     return new GridView.count(
       crossAxisCount: 2,
       children: catalog.products.map((product) {
         return new ProductSquare(
           product: product,
-          onTap: () => widget.updateProduct(product),
+          onTap: () => updateProduct(product),
         );
       }).toList(),
     );
