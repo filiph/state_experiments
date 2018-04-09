@@ -11,7 +11,7 @@ import 'package:reactive_exploration/src/vanilla/main_split.dart'
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 
 void main() {
-  final flavor = Architecture.valueNotifier;
+  final flavor = Architecture.vanillaSplit;
 
   print("\n\n===== Running: $flavor =====\n\n");
 

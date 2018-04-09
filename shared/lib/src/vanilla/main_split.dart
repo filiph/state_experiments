@@ -2,28 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
+import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() {
-  final Cart cart = new Cart.sample(catalog.products);
-  runApp(new MyApp(cart: cart));
+  runApp(new MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Cart cart;
-
-  MyApp({
-    Key key,
-    @required this.cart,
-  }) : super(key: key);
+  final cart = new Cart();
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Singleton',
+      title: 'Vanilla',
       theme: appTheme,
       home: new MyHomePage(cart: cart),
       routes: <String, WidgetBuilder>{
@@ -42,17 +37,19 @@ class MyHomePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  MyHomePageState createState() {
-    return new MyHomePageState();
-  }
+  createState() => new MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  _updateCart(Product product) {
+    setState(() => widget.cart.add(product));
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Singleton"),
+        title: new Text("Vanilla"),
         actions: <Widget>[
           // The shopping cart button in the app bar
           new CartButton(
@@ -65,6 +62,7 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       body: new ProductGrid(
         cart: widget.cart,
+        updateProduct: _updateCart,
       ),
     );
   }
@@ -72,10 +70,12 @@ class MyHomePageState extends State<MyHomePage> {
 
 class ProductGrid extends StatefulWidget {
   final Cart cart;
+  final Function(Product) updateProduct;
 
   ProductGrid({
     Key key,
     @required this.cart,
+    @required this.updateProduct,
   }) : super(key: key);
 
   @override
@@ -90,11 +90,7 @@ class _ProductGridState extends State<ProductGrid> {
       children: catalog.products.map((product) {
         return new ProductSquare(
           product: product,
-          onTap: () {
-            setState(() {
-              widget.cart.add(product);
-            });
-          },
+          onTap: () => widget.updateProduct(product),
         );
       }).toList(),
     );
