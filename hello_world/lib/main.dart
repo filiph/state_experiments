@@ -24,9 +24,9 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+int _counter = 0;
 
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -47,13 +47,27 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: () => setState(() {
-              _counter += 1;
-            }),
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ),
+      floatingActionButton: new Incrementer(),
+    );
+  }
+}
+
+class Incrementer extends StatefulWidget {
+  @override
+  IncrementerState createState() {
+    return new IncrementerState();
+  }
+}
+
+class IncrementerState extends State<Incrementer> {
+  @override
+  Widget build(BuildContext context) {
+    return new FloatingActionButton(
+      onPressed: () => setState(() {
+            _counter += 1;
+          }),
+      tooltip: 'Increment',
+      child: new Icon(Icons.add),
     );
   }
 }
