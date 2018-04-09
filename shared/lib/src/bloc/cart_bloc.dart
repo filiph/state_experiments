@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/product.dart';
@@ -14,7 +12,7 @@ class CartAddition {
   CartAddition(this.product, [this.count = 1]);
 }
 
-class CartBloc extends InheritedWidget {
+class CartBloc {
   final Cart _cart = new Cart();
 
   final BehaviorSubject<List<CartItem>> _items =
@@ -26,12 +24,7 @@ class CartBloc extends InheritedWidget {
   final StreamController<CartAddition> _cartAdditionController =
       new StreamController<CartAddition>();
 
-  CartBloc({
-    Key key,
-    @required Widget child,
-  }) : super(key: key, child: child) {
-    _items.add(_cart.items);
-    _itemCount.add(_cart.itemCount);
+  CartBloc() {
     _cartAdditionController.stream.listen((addition) {
       int currentCount = _cart.itemCount;
       _cart.add(addition.product, addition.count);
@@ -54,10 +47,5 @@ class CartBloc extends InheritedWidget {
     _itemCount.close();
     _cartAdditionController.close();
   }
-
-  static CartBloc of(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(CartBloc) as CartBloc);
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
 }
+

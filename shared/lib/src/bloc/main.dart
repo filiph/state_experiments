@@ -5,6 +5,7 @@ import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
 import 'package:reactive_exploration/src/bloc/bloc_cart_page.dart';
 import 'package:reactive_exploration/src/bloc/cart_bloc.dart';
+import 'package:reactive_exploration/src/bloc/cart_provider.dart';
 
 void main() {
   runApp(new MyApp());
@@ -13,7 +14,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new CartBloc(
+    return new CartProvider(
       child: new MaterialApp(
         title: 'Bloc',
         theme: appTheme,
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cartBloc = CartBloc.of(context);
+    final cartBloc = CartProvider.of(context);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Bloc"),
@@ -56,7 +57,7 @@ class MyHomePage extends StatelessWidget {
 class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cartBloc = CartBloc.of(context);
+    final cartBloc = CartProvider.of(context);
     return new GridView.count(
       crossAxisCount: 2,
       children: catalog.products.map((product) {

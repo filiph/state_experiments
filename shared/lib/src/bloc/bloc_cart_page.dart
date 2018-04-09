@@ -9,7 +9,7 @@ class BlocCartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = CartBloc.of(context);
+    final cart = CartProvider.of(context);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Your Cart"),
