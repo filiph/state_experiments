@@ -38,9 +38,9 @@ class CartBloc {
 
   Sink<CartAddition> get cartAddition => _cartAdditionController.sink;
 
-  BehaviorSubject<int> get itemCount => _itemCount;
+  Stream<int> get itemCount => _itemCount.stream;
 
-  BehaviorSubject<List<CartItem>> get items => _items;
+  Stream<List<CartItem>> get items => _items.stream;
 
   void dispose() {
     _items.close();
@@ -48,4 +48,3 @@ class CartBloc {
     _cartAdditionController.close();
   }
 }
-

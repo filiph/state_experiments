@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
         title: new Text("Bloc"),
         actions: <Widget>[
           new StreamBuilder<int>(
-            stream: cartBloc.itemCount.stream,
+            stream: cartBloc.itemCount,
             initialData: 0,
             builder: (context, snapshot) => new CartButton(
                   itemCount: snapshot.data,

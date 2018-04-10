@@ -16,7 +16,7 @@ class BlocCartPage extends StatelessWidget {
         title: new Text("Your Cart"),
       ),
       body: new StreamBuilder<List<CartItem>>(
-          stream: cart.items.stream,
+          stream: cart.items,
           builder: (context, snapshot) => new Text("Cart: ${snapshot.data}")),
     );
   }
