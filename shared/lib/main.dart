@@ -1,4 +1,5 @@
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
+import 'package:reactive_exploration/src/bloc_start/main.dart' as bloc_start;
 import 'package:reactive_exploration/src/scoped/main.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
@@ -42,6 +43,9 @@ void main() {
     case Architecture.bloc:
       bloc.main();
       return;
+    case Architecture.blocStart:
+      bloc_start.main();
+      return;
     case Architecture.scoped:
       scoped.main();
       return;
@@ -53,6 +57,7 @@ void main() {
 
 enum Architecture {
   bloc,
+  blocStart,
   scoped,
   singleton,
   start,
