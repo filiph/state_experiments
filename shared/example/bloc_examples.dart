@@ -19,6 +19,25 @@ class CartBloc {
   Stream<List<CartItem>> items;
 }
 
+class CartBloc_bad_side_effects {
+  bool _isSynced;
+
+  Stream<int> itemCount;
+  Stream<String> total;
+  Stream<List<CartItem>> items;
+  Sink<Product> addition;
+  Sink<Locale> locale;
+}
+
+class CartBloc_bad_side_effects_fixed {
+  Stream<bool> isSynced;
+  Stream<int> itemCount;
+  Stream<String> total;
+  Stream<List<CartItem>> items;
+  Sink<Product> addition;
+  Sink<Locale> locale;
+}
+
 int count;
 CartBloc cartBloc;
 Cart cart;
