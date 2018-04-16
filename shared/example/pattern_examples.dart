@@ -137,3 +137,21 @@ class Monica {
 }
 
 Monica monica = new Monica();
+
+abstract class Str<T> {
+  Future<bool> any(bool Function(T element) test);
+
+  Stream<E> asyncExpand<E>(Stream<E> Function(T event) convert);
+
+  Stream<E> asyncMap<E>(FutureOr<E> Function(T event) convert);
+
+  Stream<R> cast<R>();
+
+  Future<bool> contains(Object needle);
+
+  Stream distinct([bool Function(T previous, T next) equals]);
+
+  Future<E> drain<E>([E futureValue]);
+
+  Future<bool> every(bool Function(T element) test);
+}
