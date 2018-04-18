@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_exploration/src/scoped/main.dart';
+import 'package:reactive_exploration/src/scoped/complete.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
