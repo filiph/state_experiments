@@ -3,11 +3,11 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:reactive_exploration/src/scoped/scoped_cart_page.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
-import 'package:reactive_exploration/common/widgets/scoped_cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
 
@@ -69,6 +69,7 @@ class ProductGrid extends StatelessWidget {
         // SCOPED MODEL: Wraps items in the grid in a ScopedModelDecendent to access
         // the add() function in the cart model
         return new ScopedModelDescendant<CartModel>(
+          rebuildOnChange: false,
           builder: (context, child, model) => new ProductSquare(
                 product: product,
                 onTap: () => model.add(product),

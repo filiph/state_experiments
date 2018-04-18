@@ -1,6 +1,6 @@
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
 import 'package:reactive_exploration/src/bloc_start/main.dart' as bloc_start;
-import 'package:reactive_exploration/src/scoped/main.dart' as scoped;
+import 'package:reactive_exploration/src/scoped/complete.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
 import 'package:reactive_exploration/src/start/main_blob.dart' as start_blob;
@@ -14,7 +14,7 @@ import 'package:reactive_exploration/src/vanilla/main_split_broken.dart'
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 
 void main() {
-  final flavor = Architecture.vanillaSplit;
+  final flavor = Architecture.scoped;
 
   print("\n\n===== Running: $flavor =====\n\n");
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
+import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
+import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
@@ -13,17 +15,18 @@ import 'package:redux/redux.dart';
 void main() => runApp(new MyApp());
 
 class CartPage extends StatelessWidget {
-  static const routeName = "/cart";
+  static const routeName = '/cart';
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Your Cart"),
+        title: new Text('Your Cart'),
       ),
-      body: new StoreConnector<Cart, String>(
-        converter: (store) => store.state.items.toString(),
-        builder: (context, items) => new Text("Cart: $items"),
+      body: new StoreConnector<Cart, List<CartItem>>(
+        converter: (store) => store.state.items,
+        builder: (context, items) => new ListView(
+            children: items.map((i) => new ItemTile(item: i)).toList()),
       ),
     );
   }
@@ -53,7 +56,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Start"),
+        title: new Text('Redux'),
         actions: <Widget>[
           new StoreConnector<Cart, int>(
             converter: (store) => store.state.itemCount,
@@ -66,44 +69,29 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: new Column(
-        children: <Widget>[
-          new CartContents(),
-          new Expanded(
-            child: new ProductGrid(),
-          ),
-        ],
-      ),
+      body: new ProductGrid(),
     );
   }
 }
 
-class CartContents extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => new StoreConnector<Cart, String>(
-        converter: (store) => store.state.items.toString(),
-        builder: (context, count) => new Container(
-            padding: const EdgeInsets.all(24.0),
-            child: new Text("Cart: $count")),
-      );
-}
-
 class ProductGrid extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => new GridView.count(
-        crossAxisCount: 2,
-        children: catalog.products.map((product) {
-          return new StoreConnector<Cart, Function(Product)>(
-            // Dispatch the product to the reducer somehow
-            converter: (store) =>
-                (product) => store.dispatch(new AddProductAction(product)),
-            builder: (context, callback) => new ProductSquare(
-                  product: product,
-                  onTap: () {
-                    callback(product);
-                  },
-                ),
-          );
-        }).toList(),
-      );
+  Widget build(BuildContext context) {
+    return new GridView.count(
+      crossAxisCount: 2,
+      children: catalog.products.map((product) {
+        return new StoreConnector<Cart, Function(Product)>(
+          // Dispatch the product to the reducer somehow
+          converter: (store) =>
+              (product) => store.dispatch(new AddProductAction(product)),
+          builder: (context, callback) => new ProductSquare(
+                product: product,
+                onTap: () {
+                  callback(product);
+                },
+              ),
+        );
+      }).toList(),
+    );
+  }
 }

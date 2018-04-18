@@ -5,7 +5,9 @@ import 'package:reactive_exploration/common/models/catalog.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
-import 'package:reactive_exploration/common/widgets/scoped_cart_page.dart';
+
+import 'package:reactive_exploration/src/scoped/scoped_cart_page.dart';
+import 'package:reactive_exploration/src/scoped/model.dart';
 
 void main() => runApp(new MyApp());
 
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/// The sample app's main page
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,6 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-/// Displays a tappable grid of products
 class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => new GridView.count(
@@ -54,7 +54,7 @@ class ProductGrid extends StatelessWidget {
           return new ProductSquare(
             product: product,
             onTap: () => Scaffold.of(context).showSnackBar(
-                new SnackBar(content: new Text("${product.name} tapped"))),
+                new SnackBar(content: new Text('${product.name} tapped'))),
           );
         }).toList(),
       );
