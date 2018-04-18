@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_exploration/common/models/cart.dart';
+
 import 'package:reactive_exploration/common/models/catalog.dart';
+
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
-import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
+import 'package:reactive_exploration/common/widgets/scoped_cart_page.dart';
 
 void main() => runApp(new MyApp());
-
-final Cart cart = new Cart();
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Start',
+      title: 'Scoped Model',
       theme: appTheme,
       home: new MyHomePage(),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(cart)
+        CartPage.routeName: (context) => new CartPage()
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -30,27 +30,19 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Start"),
+        title: const Text('Scoped Model'),
         actions: <Widget>[
           new CartButton(
-            itemCount: cart.itemCount,
+            itemCount: 0,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
             },
           )
         ],
       ),
-      body:  new ProductGrid(),
+      body: new ProductGrid(),
     );
   }
-}
-
-/// Displays the contents of the cart
-class CartContents extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => new Container(
-      padding: const EdgeInsets.all(24.0),
-      child: new Text("Cart: ${cart.items}"));
 }
 
 /// Displays a tappable grid of products
