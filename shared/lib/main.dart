@@ -7,14 +7,10 @@ import 'package:reactive_exploration/src/start/main_blob.dart' as start_blob;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
-import 'package:reactive_exploration/src/vanilla/main_split.dart'
-    as vanilla_split;
-import 'package:reactive_exploration/src/vanilla/main_split_broken.dart'
-    as vanilla_split_broken;
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 
 void main() {
-  final flavor = Architecture.scoped;
+  final flavor = Architecture.vanilla;
 
   print("\n\n===== Running: $flavor =====\n\n");
 
@@ -30,12 +26,6 @@ void main() {
       return;
     case Architecture.vanilla:
       vanilla.main();
-      return;
-    case Architecture.vanillaSplit:
-      vanilla_split.main();
-      return;
-    case Architecture.vanillaSplitBroken:
-      vanilla_split_broken.main();
       return;
     case Architecture.valueNotifier:
       value_notifier.main();
@@ -63,8 +53,6 @@ enum Architecture {
   start,
   startBlob,
   vanilla,
-  vanillaSplit,
-  vanillaSplitBroken,
   valueNotifier,
   redux,
 }
