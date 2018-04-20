@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final cartBloc = CartProvider.of(context);
+    final CartBloc cartBloc = CartProvider.of(context);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Bloc"),

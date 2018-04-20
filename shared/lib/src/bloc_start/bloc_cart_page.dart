@@ -8,8 +8,7 @@ class BlocCartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
-    final cart = CartProvider.of(context);
+    final cartBloc = CartProvider.of(context);
 
     return new Scaffold(
       appBar: new AppBar(
