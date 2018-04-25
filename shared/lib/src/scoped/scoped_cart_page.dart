@@ -15,7 +15,7 @@ class CartPage extends StatelessWidget {
         title: const Text('Your Cart'),
       ),
       body: new ScopedModelDescendant<CartModel>(
-          builder: (context, widget, model) => model != null
+          builder: (context, _, model) => model != null
               ? new ListView(
                   children: model.items
                       .map((item) => new ItemTile(item: item))
