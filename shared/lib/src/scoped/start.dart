@@ -11,17 +11,17 @@ import 'package:reactive_exploration/common/widgets/theme.dart';
 import 'package:reactive_exploration/src/scoped/scoped_cart_page.dart';
 import 'package:reactive_exploration/src/scoped/model.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Scoped Model',
       theme: appTheme,
-      home: new MyHomePage(),
+      home: MyHomePage(),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage()
+        CartPage.routeName: (context) => CartPage()
       },
       debugShowCheckedModeBanner: false,
     );
@@ -31,11 +31,11 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('Scoped Model'),
         actions: <Widget>[
-          new CartButton(
+          CartButton(
             itemCount: 0,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
@@ -43,20 +43,20 @@ class MyHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: new ProductGrid(),
+      body: ProductGrid(),
     );
   }
 }
 
 class ProductGrid extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => new GridView.count(
+  Widget build(BuildContext context) => GridView.count(
         crossAxisCount: 2,
         children: catalog.products.map((product) {
-          return new ProductSquare(
+          return ProductSquare(
             product: product,
             onTap: () => Scaffold.of(context).showSnackBar(
-                new SnackBar(content: new Text('${product.name} tapped'))),
+                SnackBar(content: Text('${product.name} tapped'))),
           );
         }).toList(),
       );

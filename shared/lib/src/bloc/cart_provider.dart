@@ -17,7 +17,7 @@ class CartProvider extends InheritedWidget {
     Key key,
     CartBloc cartBloc,
     Widget child,
-  })  : cartBloc = cartBloc ?? new CartBloc(),
+  })  : cartBloc = cartBloc ?? CartBloc(),
         super(key: key, child: child);
 
   @override

@@ -10,14 +10,14 @@ class Cart {
   /// Creates an empty cart.
   Cart();
 
-  /// Creates a new Cart from an old Cart
+  /// Creates a Cart from an old Cart
   Cart.clone(Cart cart) {
     _items.addAll(cart._items);
   }
 
   /// Fills the cart with a sampling from the given products.
   Cart.sample(Iterable<Product> products) {
-    _items.addAll(products.take(3).map((product) => new CartItem(1, product)));
+    _items.addAll(products.take(3).map((product) => CartItem(1, product)));
   }
 
   /// The total count of items in cart, including duplicates of the same item.
@@ -33,10 +33,10 @@ class Cart {
   ///
   /// It is an unmodifiable view because we don't want a random widget to
   /// put the cart into a bad state. Use [add] and [remove] to modify the state.
-  UnmodifiableListView<CartItem> get items => new UnmodifiableListView(_items);
+  UnmodifiableListView<CartItem> get items => UnmodifiableListView(_items);
 
   /// Adds [product] to cart. This will either update an existing [CartItem]
-  /// in [items] or add a new one at the end of the list.
+  /// in [items] or add a one at the end of the list.
   void add(Product product, [int count = 1]) {
     _updateCount(product, count);
   }
@@ -61,11 +61,11 @@ class Cart {
           _items.removeAt(i);
           return;
         }
-        _items[i] = new CartItem(newCount, item.product);
+        _items[i] = CartItem(newCount, item.product);
         return;
       }
     }
     if (difference < 0) return;
-    _items.add(new CartItem(max(difference, 0), product));
+    _items.add(CartItem(max(difference, 0), product));
   }
 }

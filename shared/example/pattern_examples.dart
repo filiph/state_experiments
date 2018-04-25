@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 class VictorImperative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialButton(
-      child: new Text("Tap me!"),
+    return MaterialButton(
+      child: Text("Tap me!"),
       onPressed: () async {
         vivienne.updateSign(someData);
         var result = await monica.manufacture(otherData);
@@ -20,10 +20,10 @@ class VictorImperative extends StatelessWidget {
 class VictorObservable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialButton(
-      child: new Text("Tap me!"),
+    return MaterialButton(
+      child: Text("Tap me!"),
       onPressed: () async {
-        myTable.add(new Order(someData));
+        myTable.add(Order(someData));
         myTable.notifyListeners();
       },
     );
@@ -33,10 +33,10 @@ class VictorObservable extends StatelessWidget {
 class VictorPubsub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialButton(
-      child: new Text("Tap me!"),
+    return MaterialButton(
+      child: Text("Tap me!"),
       onPressed: () async {
-        susan.add(new Order(someData));
+        susan.add(Order(someData));
       },
     );
   }
@@ -52,7 +52,7 @@ class MonicaStream extends StatefulWidget {
 
   @override
   MonicaStreamState createState() {
-    return new MonicaStreamState();
+    return MonicaStreamState();
   }
 
 
@@ -75,10 +75,10 @@ class MonicaStreamState extends State<MonicaStream> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialButton(
-      child: new Text("Tap me!"),
+    return MaterialButton(
+      child: Text("Tap me!"),
       onPressed: () async {
-        susan.add(new Order(someData));
+        susan.add(Order(someData));
       },
     );
   }
@@ -89,18 +89,18 @@ class MonicaStreamState extends State<MonicaStream> {
     orderSubscription.resume();
   }
 
-  Future<Null> _actuallyHandle(Order o) => new Future.value();
+  Future<Null> _actuallyHandle(Order o) => Future.value();
 }
 
-final orderStreamController = new StreamController<Order>();
+final orderStreamController = StreamController<Order>();
 
 Stream<Order> get orderStream => orderStreamController.stream;
 
 class Susan extends ObservableTable {}
 
-final susan = new Susan();
+final susan = Susan();
 
-final myTable = new ObservableTable();
+final myTable = ObservableTable();
 
 class ObservableTable {
   void add(Order o) {
@@ -127,7 +127,7 @@ class Vivienne {
   }
 }
 
-Vivienne vivienne = new Vivienne();
+Vivienne vivienne = Vivienne();
 
 class Monica {
   Future<Object> manufacture(data) {
@@ -136,7 +136,7 @@ class Monica {
   }
 }
 
-Monica monica = new Monica();
+Monica monica = Monica();
 
 abstract class Str<T> {
   Future<bool> any(bool Function(T element) test);

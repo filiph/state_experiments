@@ -6,19 +6,19 @@ import 'package:reactive_exploration/common/widgets/cart_page.dart';
 import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
-final Cart _cart = new Cart();
+final Cart _cart = Cart();
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Singleton',
       theme: appTheme,
-      home: new MyHomePage(),
+      home: MyHomePage(),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(_cart)
+        CartPage.routeName: (context) => CartPage(_cart)
       },
     );
   }
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   @override
-  createState() => new _MyHomePageState();
+  createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -34,12 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Singleton"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Singleton"),
         actions: <Widget>[
           // The shopping cart button in the app bar
-          new CartButton(
+          CartButton(
             itemCount: _cart.itemCount,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
@@ -47,18 +47,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: new Column(
+      body: Column(
         children: <Widget>[
           // Description of the cart's contents
-          new Container(
+          Container(
               padding: const EdgeInsets.all(24.0),
-              child: new Text("Cart: ${_cart.items}")),
+              child: Text("Cart: ${_cart.items}")),
           // The product grid
-          new Expanded(
-            child: new GridView.count(
+          Expanded(
+            child: GridView.count(
               crossAxisCount: 2,
               children: catalog.products.map((product) {
-                return new ProductSquare(
+                return ProductSquare(
                   product: product,
                   onTap: () => setState(() {
                         _cart.add(product);

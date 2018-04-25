@@ -5,7 +5,7 @@ import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 
 class CartModel extends Model {
-  final _cart = new Cart();
+  final _cart = Cart();
 
   List<CartItem> get items => _cart.items;
 

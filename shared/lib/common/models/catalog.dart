@@ -12,7 +12,7 @@ Future<Catalog> fetchCatalog() {
   // This simulates a short delay so that we don't get too cocky about having
   // this state present from application start (something unlikely to happen
   // in the real world).
-  return new Future.delayed(
+  return Future.delayed(
       const Duration(milliseconds: 200), fetchCatalogSync);
 }
 
@@ -21,12 +21,12 @@ Future<Catalog> fetchCatalog() {
 /// This is much less realistic than [fetchCatalog] but acceptable if we want
 /// to focus on some other aspect with our sample.
 Catalog fetchCatalogSync() {
-  return new Catalog._sample();
+  return Catalog._sample();
 }
 
 /// Updates an existing [catalog] of products asynchronously.
 Future<Null> updateCatalog(Catalog catalog) {
-  return new Future.delayed(const Duration(milliseconds: 200), () {
+  return Future.delayed(const Duration(milliseconds: 200), () {
     catalog._products.clear();
     catalog._products.addAll(Catalog._sampleProducts);
   });
@@ -55,5 +55,5 @@ class Catalog {
 
   /// An immutable listing of the products.
   UnmodifiableListView<Product> get products =>
-      new UnmodifiableListView<Product>(_products);
+      UnmodifiableListView<Product>(_products);
 }

@@ -10,13 +10,13 @@ class BlocCartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = CartProvider.of(context);
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Your Cart"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Your Cart"),
       ),
-      body: new StreamBuilder<List<CartItem>>(
+      body: StreamBuilder<List<CartItem>>(
           stream: cart.items,
-          builder: (context, snapshot) => new Text("Cart: ${snapshot.data}")),
+          builder: (context, snapshot) => Text("Cart: ${snapshot.data}")),
     );
   }
 }

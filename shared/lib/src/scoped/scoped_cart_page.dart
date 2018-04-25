@@ -10,18 +10,18 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('Your Cart'),
       ),
-      body: new ScopedModelDescendant<CartModel>(
+      body: ScopedModelDescendant<CartModel>(
           builder: (context, _, model) => model != null
-              ? new ListView(
+              ? ListView(
                   children: model.items
-                      .map((item) => new ItemTile(item: item))
+                      .map((item) => ItemTile(item: item))
                       .toList())
-              : new Center(
-                  child: new Text('Empty',
+              : Center(
+                  child: Text('Empty',
                       style: Theme.of(context).textTheme.display1))),
     );
   }

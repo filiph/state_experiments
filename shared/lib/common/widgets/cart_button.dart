@@ -25,7 +25,7 @@ class CartButton extends StatefulWidget {
 
   @override
   CartButtonState createState() {
-    return new CartButtonState();
+    return CartButtonState();
   }
 }
 
@@ -34,41 +34,41 @@ class CartButtonState extends State<CartButton>
   AnimationController _animationController;
   Animation<double> _animation;
 
-  final Tween<Offset> _badgePositionTween = new Tween(
+  final Tween<Offset> _badgePositionTween = Tween(
     begin: const Offset(-0.5, 0.9),
     end: const Offset(0.0, 0.0),
   );
 
   @override
   Widget build(BuildContext context) {
-    final icon = new Icon(Icons.shopping_cart);
+    final icon = Icon(Icons.shopping_cart);
 
     if (widget.itemCount == 0) {
-      return new IconButton(
+      return IconButton(
         icon: icon,
         onPressed: widget.onPressed,
       );
     }
 
-    return new IconButton(
-        icon: new Stack(
+    return IconButton(
+        icon: Stack(
           overflow: Overflow.visible,
           children: [
-            new Icon(Icons.shopping_cart),
-            new Positioned(
+            Icon(Icons.shopping_cart),
+            Positioned(
               top: -8.0,
               right: -3.0,
-              child: new SlideTransition(
+              child: SlideTransition(
                 position: _badgePositionTween.animate(_animation),
-                child: new Material(
+                child: Material(
                     type: MaterialType.circle,
                     elevation: 2.0,
                     color: Colors.red,
-                    child: new Padding(
+                    child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                      child: new Text(
+                      child: Text(
                         widget.itemCount.toString(),
-                        style: new TextStyle(
+                        style: TextStyle(
                           fontSize: 13.0,
                           color: widget.badgeTextColor,
                           fontWeight: FontWeight.bold,
@@ -100,11 +100,11 @@ class CartButtonState extends State<CartButton>
   @override
   void initState() {
     super.initState();
-    _animationController = new AnimationController(
+    _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _animation = new CurvedAnimation(
+    _animation = CurvedAnimation(
         parent: _animationController, curve: Curves.elasticOut);
     _animationController.forward();
   }

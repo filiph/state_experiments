@@ -9,9 +9,9 @@ import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() {
-  final cartObservable = new CartObservable(new Cart());
+  final cartObservable = CartObservable(Cart());
 
-  runApp(new MyApp(
+  runApp(MyApp(
     cartObservable: cartObservable,
   ));
 }
@@ -35,14 +35,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'ValueNotifer',
       theme: appTheme,
-      home: new MyHomePage(
+      home: MyHomePage(
         cartObservable: cartObservable,
       ),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(cartObservable.value)
+        CartPage.routeName: (context) => CartPage(cartObservable.value)
       },
     );
   }
@@ -59,7 +59,7 @@ class MyHomePage extends StatefulWidget {
 
   @override
   MyHomePageState createState() {
-    return new MyHomePageState();
+    return MyHomePageState();
   }
 }
 
@@ -72,11 +72,11 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("ValueNotifer"),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("ValueNotifer"),
           actions: <Widget>[
-            new CartButton(
+            CartButton(
               itemCount: widget.cartObservable.value.itemCount,
               onPressed: () {
                 Navigator.of(context).pushNamed(CartPage.routeName);
@@ -84,7 +84,7 @@ class MyHomePageState extends State<MyHomePage> {
             )
           ],
         ),
-        body: new ProductGrid(
+        body: ProductGrid(
           cartObservable: widget.cartObservable,
         ));
   }
@@ -106,9 +106,9 @@ class CartContents extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => new Container(
+  Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.all(24.0),
-      child: new Text("Cart: ${cartObservable.value.items}"));
+      child: Text("Cart: ${cartObservable.value.items}"));
 }
 
 /// Displays a tappable grid of products
@@ -121,10 +121,10 @@ class ProductGrid extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => new GridView.count(
+  Widget build(BuildContext context) => GridView.count(
         crossAxisCount: 2,
         children: catalog.products.map((product) {
-          return new ProductSquare(
+          return ProductSquare(
             product: product,
             onTap: () {
               cartObservable.add(product);

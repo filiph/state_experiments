@@ -9,7 +9,7 @@ import 'package:reactive_exploration/common/widgets/product_square.dart';
 import 'package:reactive_exploration/common/widgets/theme.dart';
 
 void main() {
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -17,12 +17,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Vanilla',
       theme: appTheme,
-      home: new MyHomePage(cart: cart),
+      home: MyHomePage(cart: cart),
       routes: <String, WidgetBuilder>{
-        CartPage.routeName: (context) => new CartPage(cart),
+        CartPage.routeName: (context) => CartPage(cart),
       },
     );
   }
@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  createState() => new MyHomePageState();
+  createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
@@ -47,12 +47,12 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Vanilla'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Vanilla'),
         actions: <Widget>[
           // The shopping cart button in the app bar
-          new CartButton(
+          CartButton(
             itemCount: widget.cart.itemCount,
             onPressed: () {
               Navigator.of(context).pushNamed(CartPage.routeName);
@@ -60,7 +60,7 @@ class MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: new ProductGrid(
+      body: ProductGrid(
         cart: widget.cart,
         updateProduct: _updateCart,
       ),
@@ -80,10 +80,10 @@ class ProductGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new GridView.count(
+    return GridView.count(
       crossAxisCount: 2,
       children: catalog.products.map((product) {
-        return new ProductSquare(
+        return ProductSquare(
           product: product,
           onTap: () => updateProduct(product),
         );

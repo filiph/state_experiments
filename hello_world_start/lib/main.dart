@@ -20,8 +20,15 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      _counter += 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +43,28 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _counter += 1;
-          });
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Incrementer(_increment),
     );
   }
 }
+
+class Incrementer extends StatefulWidget {
+  final Function callback;
+
+  Incrementer(this.callback);
+
+  @override
+  _IncrementerState createState() => _IncrementerState();
+}
+
+class _IncrementerState extends State<Incrementer> {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: widget.callback,
+      tooltip: 'Increment',
+      child: Icon(Icons.add),
+    );
+  }
+}
+

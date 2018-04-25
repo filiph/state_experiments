@@ -11,7 +11,7 @@ class Store {
   }
 
   State getState() {
-    throw new UnimplementedError();
+    throw UnimplementedError();
   }
 }
 
@@ -34,14 +34,14 @@ class State {
   State(this.counter);
 }
 
-final initState = new State(0);
+final initState = State(0);
 
 State projectRedux(State state, Action action) {
   switch (action.type) {
     case ActionType.increment:
-      return new State(state.counter + 1);
+      return State(state.counter + 1);
     case ActionType.decrement:
-      return new State(state.counter -1);
+      return State(state.counter -1);
     default:
       return state;
   }
@@ -50,9 +50,9 @@ State projectRedux(State state, Action action) {
 
 void main() {
   stdin.lineMode = false;
-  stdin.listen((bytes) => currentKey = new String.fromCharCodes(bytes));
+  stdin.listen((bytes) => currentKey = String.fromCharCodes(bytes));
 
-  new Timer.periodic(const Duration(milliseconds: 100), (_) {
+  Timer.periodic(const Duration(milliseconds: 100), (_) {
     print("Current key: $currentKey");
   });
 }

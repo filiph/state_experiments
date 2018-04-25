@@ -8,20 +8,20 @@ import 'package:reactive_exploration/src/bloc_start/cart_bloc.dart';
 import 'package:reactive_exploration/src/bloc_start/cart_provider.dart';
 
 void main() {
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new CartProvider(
-      cartBloc: new CartBloc(),
-      child: new MaterialApp(
+    return CartProvider(
+      cartBloc: CartBloc(),
+      child: MaterialApp(
         title: 'Bloc',
         theme: appTheme,
-        home: new MyHomePage(),
+        home: MyHomePage(),
         routes: <String, WidgetBuilder>{
-          BlocCartPage.routeName: (context) => new BlocCartPage()
+          BlocCartPage.routeName: (context) => BlocCartPage()
         },
       ),
     );
@@ -33,11 +33,11 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final CartBloc cartBloc = CartProvider.of(context);
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Bloc"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bloc"),
         actions: <Widget>[
-          new CartButton(
+          CartButton(
             itemCount: 0,
             onPressed: () {
               Navigator.of(context).pushNamed(BlocCartPage.routeName);
@@ -45,7 +45,7 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: new ProductGrid(),
+      body: ProductGrid(),
     );
   }
 }
@@ -55,10 +55,10 @@ class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartBloc = CartProvider.of(context);
-    return new GridView.count(
+    return GridView.count(
       crossAxisCount: 2,
       children: catalog.products.map((product) {
-        return new ProductSquare(
+        return ProductSquare(
           product: product,
           onTap: () {
             // TODO: add product

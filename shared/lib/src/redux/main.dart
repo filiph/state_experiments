@@ -12,39 +12,39 @@ import 'package:reactive_exploration/src/redux/store.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class CartPage extends StatelessWidget {
   static const routeName = '/cart';
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Your Cart'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Your Cart'),
       ),
-      body: new StoreConnector<Cart, List<CartItem>>(
+      body: StoreConnector<Cart, List<CartItem>>(
         converter: (store) => store.state.items,
-        builder: (context, items) => new ListView(
-            children: items.map((i) => new ItemTile(item: i)).toList()),
+        builder: (context, items) => ListView(
+            children: items.map((i) => ItemTile(item: i)).toList()),
       ),
     );
   }
 }
 
 class MyApp extends StatelessWidget {
-  final store = new Store<Cart>(cartReducer, initialState: new Cart());
+  final store = Store<Cart>(cartReducer, initialState: Cart());
 
   @override
   Widget build(BuildContext context) {
-    return new StoreProvider<Cart>(
+    return StoreProvider<Cart>(
       store: store,
-      child: new MaterialApp(
+      child: MaterialApp(
         title: 'Start',
         theme: appTheme,
-        home: new MyHomePage(),
+        home: MyHomePage(),
         routes: <String, WidgetBuilder>{
-          CartPage.routeName: (context) => new CartPage()
+          CartPage.routeName: (context) => CartPage()
         },
       ),
     );
@@ -54,13 +54,13 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Redux'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Redux'),
         actions: <Widget>[
-          new StoreConnector<Cart, int>(
+          StoreConnector<Cart, int>(
             converter: (store) => store.state.itemCount,
-            builder: (context, count) => new CartButton(
+            builder: (context, count) => CartButton(
                   itemCount: count,
                   onPressed: () {
                     Navigator.of(context).pushNamed(CartPage.routeName);
@@ -69,7 +69,7 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: new ProductGrid(),
+      body: ProductGrid(),
     );
   }
 }
@@ -77,14 +77,14 @@ class MyHomePage extends StatelessWidget {
 class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new GridView.count(
+    return GridView.count(
       crossAxisCount: 2,
       children: catalog.products.map((product) {
         return new StoreConnector<Cart, Function(Product)>(
           // Dispatch the product to the reducer somehow
           converter: (store) =>
-              (product) => store.dispatch(new AddProductAction(product)),
-          builder: (context, callback) => new ProductSquare(
+              (product) => store.dispatch(AddProductAction(product)),
+          builder: (context, callback) => ProductSquare(
                 product: product,
                 onTap: () {
                   callback(product);

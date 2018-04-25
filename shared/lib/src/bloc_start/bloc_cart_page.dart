@@ -10,11 +10,11 @@ class BlocCartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartBloc = CartProvider.of(context);
 
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('Your Cart'),
       ),
-      body: new StreamBuilder<List<CartItem>>(
+      body: StreamBuilder<List<CartItem>>(
           stream: null,
           initialData: const [],
           builder: (context, snapshot) => _buildBody(context, snapshot.data)),
@@ -23,13 +23,13 @@ class BlocCartPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, List<CartItem> items) {
     if (items.isEmpty) {
-      return new Center(
-          child: new Text('Empty cart',
+      return Center(
+          child: Text('Empty cart',
               style: Theme.of(context).textTheme.display1));
     }
 
     final itemTiles =
-        items.map((item) => new ItemTile(item: item)).toList(growable: false);
-    return new ListView(children: itemTiles);
+        items.map((item) => ItemTile(item: item)).toList(growable: false);
+    return ListView(children: itemTiles);
   }
 }

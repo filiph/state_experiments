@@ -11,13 +11,13 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Your Cart"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Your Cart"),
       ),
-      body: new ListView(
+      body: ListView(
           children:
-              cart.items.map((item) => new ItemTile(item: item)).toList()),
+              cart.items.map((item) => ItemTile(item: item)).toList()),
     );
   }
 }
@@ -28,19 +28,19 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = new TextStyle(
+    final textStyle = TextStyle(
         color: isDark(item.product.color) ? Colors.white : Colors.black);
 
-    return new Container(
+    return Container(
       color: item.product.color,
-      child: new ListTile(
-        title: new Text(
+      child: ListTile(
+        title: Text(
           item.product.name,
           style: textStyle,
         ),
-        trailing: new CircleAvatar(
+        trailing: CircleAvatar(
             backgroundColor: const Color(0x33FFFFFF),
-            child: new Text(item.count.toString(), style: textStyle)),
+            child: Text(item.count.toString(), style: textStyle)),
       ),
     );
   }

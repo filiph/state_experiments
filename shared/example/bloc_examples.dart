@@ -45,7 +45,7 @@ Cart cart;
 class BoringWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Text("Count: ${cart.itemCount}");
+    return Text("Count: ${cart.itemCount}");
   }
 }
 
@@ -54,11 +54,11 @@ class BoringWidget extends StatelessWidget {
 class AwesomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new StreamBuilder<int>(
+    return StreamBuilder<int>(
         stream: cartBloc.itemCount,
         initialData: 0,
         builder: (context, snapshot) {
-          return new Text("Count: ${snapshot.data}");
+          return Text("Count: ${snapshot.data}");
         });
   }
 }
@@ -66,12 +66,12 @@ class AwesomeWidget extends StatelessWidget {
 class AwkwardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new StreamBuilder<int>(
+    return StreamBuilder<int>(
         stream: cartBloc.total,
         initialData: 0,
         builder: (context, snapshot) {
           final formated = "${snapshot.data ~/ 100} USD";
-          return new Text("Total: $formated");
+          return Text("Total: $formated");
         });
   }
 }

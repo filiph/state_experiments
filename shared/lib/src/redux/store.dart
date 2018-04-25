@@ -12,8 +12,8 @@ class AddProductAction {
 Cart cartReducer(Cart state, dynamic action) {
   if (action is AddProductAction) {
     print('Adding product!');
-    // Reducer always returns a new state,never mutating the old
-    return new Cart.clone(state)..add(action.product);
+    // Reducer always returns a state,never mutating the old
+    return Cart.clone(state)..add(action.product);
   }
   return state;
 }

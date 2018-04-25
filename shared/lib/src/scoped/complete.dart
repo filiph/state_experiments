@@ -15,20 +15,20 @@ import 'package:reactive_exploration/common/models/catalog.dart';
 
 import 'package:reactive_exploration/src/scoped/model.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // SCOPED MODEL: Inserts a ScopedModel widget into the widget tree
-    return new ScopedModel<CartModel>(
-      model: new CartModel(),
-      child: new MaterialApp(
+    return ScopedModel<CartModel>(
+      model: CartModel(),
+      child: MaterialApp(
         title: 'Scoped Model',
         theme: appTheme,
-        home: new CatalogHomePage(),
+        home: CatalogHomePage(),
         routes: <String, WidgetBuilder>{
-          CartPage.routeName: (context) => new CartPage(),
+          CartPage.routeName: (context) => CartPage(),
         },
         debugShowCheckedModeBanner: false,
       ),
@@ -39,14 +39,14 @@ class MyApp extends StatelessWidget {
 class CatalogHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
+    return Scaffold(
+      appBar: AppBar(
         title: const Text('Scoped Model'),
         actions: <Widget>[
           // SCOPED MODEL: Wraps the cart button in a ScopdeModelDescendent to access
           // the nr of items in the cart
-          new ScopedModelDescendant<CartModel>(
-            builder: (context, child, model) => new CartButton(
+          ScopedModelDescendant<CartModel>(
+            builder: (context, child, model) => CartButton(
                   itemCount: model.itemCount,
                   onPressed: () {
                     Navigator.of(context).pushNamed(CartPage.routeName);
@@ -55,7 +55,7 @@ class CatalogHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: new ProductGrid(),
+      body: ProductGrid(),
     );
   }
 }
@@ -63,14 +63,14 @@ class CatalogHomePage extends StatelessWidget {
 class ProductGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new GridView.count(
+    return GridView.count(
       crossAxisCount: 2,
       children: catalog.products.map((product) {
         // SCOPED MODEL: Wraps items in the grid in a ScopedModelDecendent to access
         // the add() function in the cart model
-        return new ScopedModelDescendant<CartModel>(
+        return ScopedModelDescendant<CartModel>(
           rebuildOnChange: false,
-          builder: (context, child, model) => new ProductSquare(
+          builder: (context, child, model) => ProductSquare(
                 product: product,
                 onTap: () => model.add(product),
               ),

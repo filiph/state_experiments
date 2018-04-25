@@ -16,14 +16,14 @@ class ProductSquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Material(
+    return Material(
       color: product.color,
-      child: new InkWell(
+      child: InkWell(
         onTap: onTap,
-        child: new Center(
-            child: new Text(
+        child: Center(
+            child: Text(
           product.name,
-          style: new TextStyle(
+          style: TextStyle(
               color: isDark(product.color) ? Colors.white : Colors.black),
         )),
       ),
