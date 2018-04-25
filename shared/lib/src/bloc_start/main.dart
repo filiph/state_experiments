@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Bloc',
         theme: appTheme,
+        debugShowCheckedModeBanner: false,
         home: MyHomePage(),
         routes: <String, WidgetBuilder>{
           BlocCartPage.routeName: (context) => BlocCartPage()
