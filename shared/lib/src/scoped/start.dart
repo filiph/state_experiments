@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:scoped_model/scoped_model.dart';
+
 import 'package:reactive_exploration/common/models/catalog.dart';
 
 import 'package:reactive_exploration/common/widgets/cart_button.dart';

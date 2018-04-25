@@ -21,7 +21,7 @@ class CartPage extends StatelessWidget {
                       .map((item) => new ItemTile(item: item))
                       .toList())
               : new Center(
-                  child: new Text('Empty cart',
+                  child: new Text('Empty',
                       style: Theme.of(context).textTheme.display1))),
     );
   }
