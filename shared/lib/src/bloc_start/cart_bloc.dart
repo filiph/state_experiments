@@ -6,5 +6,7 @@ import 'package:reactive_exploration/common/models/product.dart';
 import 'package:rxdart/subjects.dart';
 
 class CartBloc {
-  
+  final _cart = Cart();
+
+  // TODO
 }
