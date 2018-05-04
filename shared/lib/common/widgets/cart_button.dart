@@ -41,14 +41,12 @@ class CartButtonState extends State<CartButton>
 
   @override
   Widget build(BuildContext context) {
-    final icon = Icon(Icons.shopping_cart);
-
-    if (widget.itemCount == 0) {
-      return IconButton(
-        icon: icon,
-        onPressed: widget.onPressed,
-      );
-    }
+    // if (widget.itemCount == 0) {
+    //   return IconButton(
+    //     icon: Icon(Icons.shopping_cart),
+    //     onPressed: widget.onPressed,
+    //   );
+    // }
 
     return IconButton(
         icon: Stack(
@@ -104,8 +102,8 @@ class CartButtonState extends State<CartButton>
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
-    _animation = CurvedAnimation(
-        parent: _animationController, curve: Curves.elasticOut);
+    _animation =
+        CurvedAnimation(parent: _animationController, curve: Curves.elasticOut);
     _animationController.forward();
   }
 }

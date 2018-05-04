@@ -33,7 +33,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scoped Model'),
+        title: const Text('Product Catalog'),
         actions: <Widget>[
           CartButton(
             itemCount: 0,
