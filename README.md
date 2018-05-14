@@ -1,5 +1,8 @@
 Welcome to the companion repository to the Google I/O talk by
-@mjohnsullivan and @filiph.
+@mjohnsullivan and @filiph called [Build reactive mobile apps
+with Flutter][session].
+
+[session]: https://www.youtube.com/watch?v=RS36gBEp8OI
 
 The meat of this repo is in the `shared/` directory. That contains our
 shopping app example built in many different architectural patterns. The app
