@@ -15,8 +15,12 @@ import 'package:rxdart/rxdart.dart';
 class CatalogBloc {
   static const _productsPerPage = 10;
 
+  /// We're using ReactiveX's [PublishSubject] here because we want to easily
+  /// buffer the stream. See [CatalogBloc] constructor.
   final _indexController = PublishSubject<int>();
 
+  /// These are the pages stored in memory. For O(1) retrieval, we're storing
+  /// them in a [Map]. The key value is [CatalogPage.startIndex].
   final _pages = <int, CatalogPage>{};
 
   /// A set of pages that are currently being fetched from the network.
@@ -46,6 +50,8 @@ class CatalogBloc {
   /// catalog.
   Stream<CatalogSlice> get slice => _sliceSubject.stream;
 
+  /// Outputs the [CatalogPage.startIndex] given an arbitrary index of
+  /// a product.
   int _getPageStartFromIndex(int index) =>
       (index ~/ _productsPerPage) * _productsPerPage;
 
@@ -81,7 +87,7 @@ class CatalogBloc {
   }
 
   /// Fetches a page of products from a database. The [CatalogPage.startIndex]
-  /// will be [index].
+  /// of the returned value will be [index].
   Future<CatalogPage> _requestPage(int index) async {
     // Simulate network delay.
     await Future.delayed(const Duration(milliseconds: 300));
@@ -90,9 +96,9 @@ class CatalogBloc {
     // index so that scrolling back to a position gives the same exact products.
     final random = new Random(index);
     final products = List.generate(_productsPerPage, (_) {
-      int number = random.nextInt(0xffff);
-      return Product(number, "Product $number",
-          Color(0xFF000000 | random.nextInt(0xFFFFFF)));
+      final number = random.nextInt(0xffff);
+      final color = Color(0xFF000000 | random.nextInt(0xFFFFFF));
+      return Product(number, "Product $number", color);
     });
     return CatalogPage(products, index);
   }
@@ -100,10 +106,10 @@ class CatalogBloc {
   /// Creates a [CatalogSlice] from the current [_pages] and sends it
   /// down the [slice] stream.
   void _sendNewSlice() {
-    final index = _pages.keys.fold(0x7FFFFFFF, min);
+    final lowestIndex = _pages.keys.fold(0x7FFFFFFF, min);
     final pages = _pages.values.toList(growable: false);
 
-    final slice = new CatalogSlice(pages, index, true);
+    final slice = new CatalogSlice(pages, lowestIndex, true);
 
     _sliceSubject.add(slice);
   }
