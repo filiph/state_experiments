@@ -3,7 +3,10 @@ import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_page.dart'
 
 /// A slice of the catalog provided to an infinite-scrolling [ListView].
 ///
-/// This is backed by an arbitrary number of [_pages].
+/// A [CatalogSlice] is a convenience class backed by an arbitrary
+/// number of [CatalogPage]s. Most of the time, there is more than one
+/// [CatalogPage] in memory — but the view code should _not_ need to worry about
+/// that.
 class CatalogSlice {
   final List<CatalogPage> _pages;
 
