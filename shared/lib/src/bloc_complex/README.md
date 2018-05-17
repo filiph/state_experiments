@@ -1,7 +1,7 @@
 This version of the app shows how you would manage a more complex scenario with the usage
 of Streams and BLoC (business logic components).
 
-This app has the following functionality on top of the one in other versions:
+This app has the following functionality on top of the ones in other versions:
 
 * The product list is arbitrarily large (in fact, it is infinite)
 * Products are loaded asynchronously from (fake) network in batches
