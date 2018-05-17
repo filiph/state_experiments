@@ -18,9 +18,6 @@ class CartBloc {
   final BehaviorSubject<List<CartItem>> _items =
       BehaviorSubject<List<CartItem>>(seedValue: []);
 
-  final _inCartProductIdsSubject =
-      BehaviorSubject<Set<int>>(seedValue: Set<int>());
-
   final BehaviorSubject<int> _itemCount = BehaviorSubject<int>(seedValue: 0);
 
   final StreamController<CartAddition> _cartAdditionController =
@@ -31,15 +28,10 @@ class CartBloc {
       _cart.add(addition.product, addition.count);
       _items.add(_cart.items);
       _itemCount.add(_cart.itemCount);
-      _inCartProductIdsSubject
-          .add(_cart.items.map((item) => item.product.id).toSet());
     });
   }
 
   Sink<CartAddition> get cartAddition => _cartAdditionController.sink;
-
-  Stream<Set<int>> get inCartProductIds =>
-      _inCartProductIdsSubject.stream.distinct();
 
   Stream<int> get itemCount => _itemCount.stream.distinct();
 
