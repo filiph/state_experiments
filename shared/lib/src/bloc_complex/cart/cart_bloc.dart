@@ -13,15 +13,13 @@ class CartAddition {
 }
 
 class CartBloc {
-  final Cart _cart = Cart();
+  final _cart = Cart();
 
-  final BehaviorSubject<List<CartItem>> _items =
-      BehaviorSubject<List<CartItem>>(seedValue: []);
+  final _items = BehaviorSubject<List<CartItem>>(seedValue: []);
 
-  final BehaviorSubject<int> _itemCount = BehaviorSubject<int>(seedValue: 0);
+  final _itemCount = BehaviorSubject<int>(seedValue: 0);
 
-  final StreamController<CartAddition> _cartAdditionController =
-      StreamController<CartAddition>();
+  final _cartAdditionController = StreamController<CartAddition>();
 
   CartBloc() {
     _cartAdditionController.stream.listen((addition) {

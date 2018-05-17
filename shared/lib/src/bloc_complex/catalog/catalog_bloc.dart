@@ -25,7 +25,7 @@ class CatalogBloc {
 
   /// A set of pages that are currently being fetched from the network.
   /// They are identified by their [CatalogPage.startIndex].
-  final Set<int> _pagesBeingRequested = new Set();
+  final _pagesBeingRequested = new Set<int>();
 
   final _sliceSubject = BehaviorSubject<CatalogSlice>();
 

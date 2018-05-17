@@ -17,7 +17,8 @@ class CatalogPage {
 
   int get endIndex => startIndex + count - 1;
 
-  UnmodifiableListView<Product> get products => UnmodifiableListView(_products);
+  UnmodifiableListView<Product> get products =>
+      UnmodifiableListView<Product>(_products);
 
   @override
   String toString() => "_CatalogPage($startIndex-$endIndex)";
