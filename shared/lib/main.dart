@@ -1,5 +1,8 @@
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
+import 'package:reactive_exploration/src/bloc_complex/main.dart'
+    as bloc_complex;
 import 'package:reactive_exploration/src/bloc_start/main.dart' as bloc_start;
+import 'package:reactive_exploration/src/redux/main.dart' as redux;
 import 'package:reactive_exploration/src/scoped/start.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
@@ -7,7 +10,6 @@ import 'package:reactive_exploration/src/start/main_blob.dart' as start_blob;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
-import 'package:reactive_exploration/src/redux/main.dart' as redux;
 
 void main() {
   final flavor = Architecture.vanilla;
@@ -33,6 +35,9 @@ void main() {
     case Architecture.bloc:
       bloc.main();
       return;
+    case Architecture.blocComplex:
+      bloc_complex.main();
+      return;
     case Architecture.blocStart:
       bloc_start.main();
       return;
@@ -47,6 +52,7 @@ void main() {
 
 enum Architecture {
   bloc,
+  blocComplex,
   blocStart,
   scoped,
   singleton,
