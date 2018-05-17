@@ -24,15 +24,15 @@ class ProductGrid extends StatelessWidget {
     final catalogBloc = CatalogProvider.of(context);
 
     return StreamBuilder<CatalogSlice>(
-        stream: catalogBloc.slice,
-        initialData: CatalogSlice.empty(),
-        builder: (context, snapshot) {
-          return GridView.builder(
-              gridDelegate: _gridDelegate,
-              itemCount: snapshot.data.endIndex + _loadingSpace,
-              itemBuilder: (context, index) =>
-                  _squareBuilder(index, snapshot.data, catalogBloc, cartBloc));
-        });
+      stream: catalogBloc.slice,
+      initialData: CatalogSlice.empty(),
+      builder: (context, snapshot) => GridView.builder(
+            gridDelegate: _gridDelegate,
+            itemCount: snapshot.data.endIndex + _loadingSpace,
+            itemBuilder: (context, index) =>
+                _squareBuilder(index, snapshot.data, catalogBloc, cartBloc),
+          ),
+    );
   }
 
   /// Builds a square of the product on a given [index] in the catalog.

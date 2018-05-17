@@ -2,9 +2,10 @@ import 'dart:collection';
 
 import 'package:reactive_exploration/common/models/product.dart';
 
-/// A page of [count] catalog items fetched from network. This mimics
-/// a paginated web API, where you don't get results one by one
-/// but in batches.
+/// A page of catalog items fetched from network.
+///
+/// This mimics a paginated web API response, where you don't get results
+/// one by one but in batches.
 class CatalogPage {
   final List<Product> _products;
 

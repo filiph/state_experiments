@@ -1,7 +1,9 @@
 import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_page.dart';
 
-/// A slice of the catalog provided to the [ListView].
+/// A slice of the catalog provided to an infinite-scrolling [ListView].
+///
+/// This is backed by an arbitrary number of [_pages].
 class CatalogSlice {
   final List<CatalogPage> _pages;
 
@@ -23,7 +25,7 @@ class CatalogSlice {
   int get endIndex =>
       startIndex + _pages.map((page) => page.count).fold(0, (p, e) => p + e);
 
-  /// Returns the product at [index] or `null` if data isn't loaded yet.
+  /// Returns the product at [index], or `null` if data isn't loaded yet.
   Product elementAt(int index) {
     for (final page in _pages) {
       if (index >= page.startIndex && index <= page.endIndex) {
