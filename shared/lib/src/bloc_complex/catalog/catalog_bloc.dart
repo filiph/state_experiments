@@ -25,7 +25,7 @@ class CatalogBloc {
 
   /// A set of pages that are currently being fetched from the network.
   /// They are identified by their [CatalogPage.startIndex].
-  final _pagesBeingRequested = new Set<int>();
+  final _pagesBeingRequested = Set<int>();
 
   final _sliceSubject = BehaviorSubject<CatalogSlice>();
 
@@ -94,7 +94,7 @@ class CatalogBloc {
 
     // Create a list of random products. We seed the random generator with
     // index so that scrolling back to a position gives the same exact products.
-    final random = new Random(index);
+    final random = Random(index);
     final products = List.generate(_productsPerPage, (_) {
       final number = random.nextInt(0xffff);
       final color = Color(0xFF000000 | random.nextInt(0xFFFFFF));
@@ -109,7 +109,7 @@ class CatalogBloc {
     final lowestIndex = _pages.keys.fold(0x7FFFFFFF, min);
     final pages = _pages.values.toList(growable: false);
 
-    final slice = new CatalogSlice(pages, lowestIndex, true);
+    final slice = CatalogSlice(pages, lowestIndex, true);
 
     _sliceSubject.add(slice);
   }
