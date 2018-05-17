@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:math';
 import 'dart:ui' show Color;
 
 import 'package:reactive_exploration/common/models/product.dart';
@@ -12,8 +13,7 @@ Future<Catalog> fetchCatalog() {
   // This simulates a short delay so that we don't get too cocky about having
   // this state present from application start (something unlikely to happen
   // in the real world).
-  return Future.delayed(
-      const Duration(milliseconds: 200), fetchCatalogSync);
+  return Future.delayed(const Duration(milliseconds: 200), fetchCatalogSync);
 }
 
 /// Fetches the catalog synchronously.
