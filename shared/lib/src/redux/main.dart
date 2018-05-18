@@ -25,8 +25,15 @@ class CartPage extends StatelessWidget {
       ),
       body: StoreConnector<Cart, List<CartItem>>(
         converter: (store) => store.state.items,
-        builder: (context, items) => ListView(
-            children: items.map((i) => ItemTile(item: i)).toList()),
+        builder: (context, items) {
+          if (items.isEmpty) {
+            return Center(
+              child: Text('Empty', style: Theme.of(context).textTheme.display1),
+            );
+          }
+          return ListView(
+              children: items.map((i) => ItemTile(item: i)).toList());
+        },
       ),
     );
   }
