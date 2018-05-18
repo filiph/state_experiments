@@ -14,15 +14,15 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Your Cart'),
       ),
-      body: ScopedModelDescendant<CartModel>(
-          builder: (context, _, model) => model != null
-              ? ListView(
-                  children: model.items
-                      .map((item) => ItemTile(item: item))
-                      .toList())
-              : Center(
-                  child: Text('Empty',
-                      style: Theme.of(context).textTheme.display1))),
+      body: ScopedModelDescendant<CartModel>(builder: (context, _, model) {
+        if (model == null || model.items.isEmpty) {
+          return Center(
+            child: Text('Empty', style: Theme.of(context).textTheme.display1),
+          );
+        }
+        return ListView(
+            children: model.items.map((item) => ItemTile(item: item)).toList());
+      }),
     );
   }
 }
