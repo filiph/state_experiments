@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       child: CartProvider(
         cartBloc: cart,
         child: MaterialApp(
-          title: 'Bloc',
+          title: 'Bloc Complex',
           theme: appTheme,
           home: MyHomePage(),
           routes: {BlocCartPage.routeName: (context) => BlocCartPage()},
@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
     final cartBloc = CartProvider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Bloc"),
+        title: Text("Bloc Complex"),
         actions: <Widget>[
           StreamBuilder<int>(
             stream: cartBloc.itemCount,
