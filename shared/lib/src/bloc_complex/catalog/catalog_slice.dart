@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_page.dart';
 
@@ -10,6 +12,7 @@ import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_page.dart'
 class CatalogSlice {
   final List<CatalogPage> _pages;
 
+  /// The index at which this slice starts to provide [Product]s.
   final int startIndex;
 
   /// Whether or not this slice is the end of the catalog.
@@ -24,9 +27,9 @@ class CatalogSlice {
         startIndex = 0,
         hasNext = true;
 
-  /// The index of the last index of this slice.
+  /// The index of the last product of this slice.
   int get endIndex =>
-      startIndex + _pages.map((page) => page.count).fold(0, (p, e) => p + e);
+      startIndex + _pages.map((page) => page.endIndex).fold(-1, max);
 
   /// Returns the product at [index], or `null` if data isn't loaded yet.
   Product elementAt(int index) {
