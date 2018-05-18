@@ -68,9 +68,9 @@ class _ProductSquareState extends State<ProductSquare> {
   /// Here, we're disposing of the old [_bloc] and creating a new one.
   @override
   void didUpdateWidget(ProductSquare oldWidget) {
+    super.didUpdateWidget(oldWidget);
     _disposeBloc();
     _createBloc();
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -99,7 +99,7 @@ class _ProductSquareState extends State<ProductSquare> {
     _bloc.dispose();
   }
 
-  /// A helper method that only build the text of the [ProductSquare].
+  /// A helper method that only builds the text of the [ProductSquare].
   ///
   /// The text will be underlined when [isInCart] is `true`.
   Widget _renderText(bool isInCart) {
