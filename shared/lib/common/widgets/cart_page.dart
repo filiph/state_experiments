@@ -15,9 +15,12 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Your Cart"),
       ),
-      body: ListView(
-          children:
-              cart.items.map((item) => ItemTile(item: item)).toList()),
+      body: cart.items.isEmpty
+          ? Center(
+              child: Text('Empty', style: Theme.of(context).textTheme.display1))
+          : ListView(
+              children:
+                  cart.items.map((item) => ItemTile(item: item)).toList()),
     );
   }
 }
