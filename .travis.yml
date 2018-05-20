@@ -12,8 +12,9 @@ addons:
 before_script:
   - git clone https://github.com/flutter/flutter.git -b beta --depth 1
   - ./flutter/bin/flutter doctor
+  - chmod +x travis_script.sh
 script:
-  - cd $HOME/shared && ../flutter/bin/flutter test
+  - ./travis_script.sh
 cache:
   directories:
     - $HOME/shared/.pub-cache
