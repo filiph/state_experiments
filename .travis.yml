@@ -1,6 +1,8 @@
 # From https://medium.com/flutter-io/test-flutter-apps-on-travis-3fd5142ecd8c
 os:
   - linux
+git:
+  depth: 3
 sudo: false
 addons:
   apt:
@@ -10,9 +12,9 @@ addons:
       - libstdc++6
       - fonts-droid
 before_script:
-  - git clone https://github.com/flutter/flutter.git -b beta --depth 1
+  - git clone https://github.com/flutter/flutter.git -b beta
   - ./flutter/bin/flutter doctor
-  - git clone https://github.com/flutter/flutter.git -b dev --depth 1 flutter-dev
+  - git clone https://github.com/flutter/flutter.git -b dev flutter-dev
   - ./flutter-dev/bin/flutter doctor
   - chmod +x travis_script.sh
 script:
