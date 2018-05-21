@@ -12,6 +12,8 @@ addons:
 before_script:
   - git clone https://github.com/flutter/flutter.git -b beta --depth 1
   - ./flutter/bin/flutter doctor
+  - git clone https://github.com/flutter/flutter.git -b dev --depth 1 flutter-dev
+  - ./flutter-dev/bin/flutter doctor
   - chmod +x travis_script.sh
 script:
   - ./travis_script.sh
