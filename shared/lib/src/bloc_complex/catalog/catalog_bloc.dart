@@ -32,7 +32,12 @@ class CatalogBloc {
   CatalogBloc() {
     _indexController.stream
         // Don't try to update too frequently.
-        .bufferTime(const Duration(milliseconds: 500))
+        // TODO(filiph): reintroduce .bufferTime()
+        //               Blocked on resolution of
+        //               https://github.com/ReactiveX/rxdart/pull/153.
+        //               .bufferCount() works but bufferTime() makes more sense
+        //               here
+        .bufferCount(2)
         // Don't update when there is no need.
         .where((batch) => batch.isNotEmpty)
         .listen(_handleIndexes);
