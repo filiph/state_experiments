@@ -3,7 +3,7 @@ import 'package:reactive_exploration/src/bloc_complex/main.dart'
     as bloc_complex;
 import 'package:reactive_exploration/src/bloc_start/main.dart' as bloc_start;
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
-import 'package:reactive_exploration/src/scoped/start.dart' as scoped;
+import 'package:reactive_exploration/src/scoped/complete.dart' as scoped;
 import 'package:reactive_exploration/src/singleton/main.dart' as singleton;
 import 'package:reactive_exploration/src/start/main.dart' as start;
 import 'package:reactive_exploration/src/start/main_blob.dart' as start_blob;

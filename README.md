@@ -1,4 +1,6 @@
-Welcome to the companion repository to the Google I/O talk by
+[![Build Status](https://travis-ci.org/filiph/state_experiments.svg?branch=master)](https://travis-ci.org/filiph/state_experiments)
+
+Welcome to the companion repository to the Google I/O 2018 talk by
 @mjohnsullivan and @filiph called [Build reactive mobile apps
 with Flutter][session].
 

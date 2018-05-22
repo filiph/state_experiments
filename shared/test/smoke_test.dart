@@ -92,12 +92,32 @@ void main() {
   });
 }
 
+/// Verifies that the app compiles and runs, and that tapping products
+/// adds them to cart.
+///
+/// This test exists to ensure that the sample works with future versions
+/// of Flutter.
 Future _performSmokeTest(WidgetTester tester, Widget app) async {
   await tester.pumpWidget(app);
 
-  await tester.tap(find.byType(CartButton));
+  expect(find.text("0"), findsOneWidget);
 
+  await tester.tap(find.byType(CartButton));
   await tester.pumpAndSettle();
 
-  expect(tester.any(find.text("Empty")), isTrue);
+  expect(find.text("Empty"), findsOneWidget);
+
+  await tester.pageBack();
+  await tester.pumpAndSettle();
+
+  await tester.tap(find.text("Socks"));
+  await tester.pumpAndSettle();
+
+  expect(find.text("1"), findsOneWidget);
+
+  await tester.tap(find.byType(CartButton));
+  await tester.pumpAndSettle();
+
+  expect(find.text("Empty"), findsNothing);
+  expect(find.text("Socks"), findsOneWidget);
 }
