@@ -30,7 +30,7 @@ class ProductGrid extends StatelessWidget {
             gridDelegate: _gridDelegate,
             itemCount: snapshot.data.endIndex + _loadingSpace,
             itemBuilder: (context, index) =>
-                _squareBuilder(index, snapshot.data, catalogBloc, cartBloc),
+                _createSquare(index, snapshot.data, catalogBloc, cartBloc),
           ),
     );
   }
@@ -38,7 +38,7 @@ class ProductGrid extends StatelessWidget {
   /// Builds a square of the product on a given [index] in the catalog.
   /// Also sends the [index] to the [catalogBloc] so it can potentially load
   /// more data.
-  Widget _squareBuilder(int index, CatalogSlice slice, CatalogBloc catalogBloc,
+  Widget _createSquare(int index, CatalogSlice slice, CatalogBloc catalogBloc,
       CartBloc cartBloc) {
     // Notify catalog BLoC of the latest index that the framework is trying
     // to build.

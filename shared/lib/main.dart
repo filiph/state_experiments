@@ -11,6 +11,13 @@ import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 
+/// This rather unconventional main method allows us to switch to vastly
+/// different implementations of the same app without confusing Flutter
+/// and the IDE with many `main.dart` files in `lib/`.
+///
+/// All this main function does is run _another_ main function in one of
+/// the imported files. When you're exploring a particular architecture,
+/// just change the `flavor = ...` line below and (hot-)restart the app.
 void main() {
   final flavor = Architecture.vanilla;
 

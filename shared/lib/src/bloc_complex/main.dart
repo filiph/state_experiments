@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       catalog: catalog,
       // ... and the cart component via InheritedWidget like so.
       // But BLoC works with any other mechanism, including passing
-      // down the widget tree,
+      // down the widget tree.
       child: CartProvider(
         cartBloc: cart,
         child: MaterialApp(

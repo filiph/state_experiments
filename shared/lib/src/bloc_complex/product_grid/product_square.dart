@@ -55,7 +55,7 @@ class _ProductSquareState extends State<ProductSquare> {
           child: StreamBuilder<bool>(
               stream: _bloc.isInCart,
               initialData: false,
-              builder: (context, snapshot) => _renderText(snapshot.data)),
+              builder: (context, snapshot) => _createText(snapshot.data)),
         ),
       ),
     );
@@ -94,15 +94,10 @@ class _ProductSquareState extends State<ProductSquare> {
     _subscription = widget.itemsStream.listen(_bloc.cartItems.add);
   }
 
-  void _disposeBloc() {
-    _subscription.cancel();
-    _bloc.dispose();
-  }
-
   /// A helper method that only builds the text of the [ProductSquare].
   ///
   /// The text will be underlined when [isInCart] is `true`.
-  Widget _renderText(bool isInCart) {
+  Widget _createText(bool isInCart) {
     return Text(
       widget.product.name,
       style: TextStyle(
@@ -110,5 +105,10 @@ class _ProductSquareState extends State<ProductSquare> {
         decoration: isInCart ? TextDecoration.underline : null,
       ),
     );
+  }
+
+  void _disposeBloc() {
+    _subscription.cancel();
+    _bloc.dispose();
   }
 }

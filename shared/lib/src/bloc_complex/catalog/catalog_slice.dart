@@ -20,7 +20,8 @@ class CatalogSlice {
   /// Currently always `true` as our catalog is infinite.
   final bool hasNext;
 
-  const CatalogSlice(this._pages, this.startIndex, this.hasNext);
+  CatalogSlice(this._pages, this.hasNext)
+      : startIndex = _pages.map((p) => p.startIndex).fold(0x7FFFFFFF, min);
 
   const CatalogSlice.empty()
       : _pages = const [],

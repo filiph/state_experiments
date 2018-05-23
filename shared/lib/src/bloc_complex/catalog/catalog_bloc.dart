@@ -11,7 +11,7 @@ import 'package:rxdart/rxdart.dart';
 /// a database, page by page, according to position in an infinite list.
 ///
 /// Only the data that are close to the current location are cached, the rest
-/// is thrown away.
+/// are thrown away.
 class CatalogBloc {
   static const _productsPerPage = 10;
 
@@ -63,7 +63,8 @@ class CatalogBloc {
   /// This will handle the incoming [indexes] (that were requested by
   /// a [IndexedWidgetBuilder]) and, if needed, will fetch missing data.
   void _handleIndexes(List<int> indexes) {
-    final int minIndex = indexes.fold(0x7fffffff, min);
+    const maxInt = 0x7fffffff;
+    final int minIndex = indexes.fold(maxInt, min);
     final int maxIndex = indexes.fold(-1, max);
 
     final minPageIndex = _getPageStartFromIndex(minIndex);
@@ -111,10 +112,9 @@ class CatalogBloc {
   /// Creates a [CatalogSlice] from the current [_pages] and sends it
   /// down the [slice] stream.
   void _sendNewSlice() {
-    final lowestIndex = _pages.keys.fold(0x7FFFFFFF, min);
     final pages = _pages.values.toList(growable: false);
 
-    final slice = CatalogSlice(pages, lowestIndex, true);
+    final slice = CatalogSlice(pages, true);
 
     _sliceSubject.add(slice);
   }
