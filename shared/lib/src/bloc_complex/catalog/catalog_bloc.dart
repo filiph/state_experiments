@@ -32,12 +32,7 @@ class CatalogBloc {
   CatalogBloc() {
     _indexController.stream
         // Don't try to update too frequently.
-        // TODO(filiph): reintroduce .bufferTime()
-        //               Blocked on resolution of
-        //               https://github.com/ReactiveX/rxdart/pull/153.
-        //               .bufferCount() works but bufferTime() makes more sense
-        //               here
-        .bufferCount(2)
+        .bufferTime(Duration(milliseconds: 500))
         // Don't update when there is no need.
         .where((batch) => batch.isNotEmpty)
         .listen(_handleIndexes);
@@ -126,9 +121,10 @@ class CatalogProvider extends InheritedWidget {
 
   CatalogProvider({
     Key key,
-    CatalogBloc catalog,
+    @required CatalogBloc catalog,
     Widget child,
-  })  : catalogBloc = catalog ?? CatalogBloc(),
+  })  : assert(catalog != null),
+        catalogBloc = catalog,
         super(key: key, child: child);
 
   @override
