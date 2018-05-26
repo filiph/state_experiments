@@ -51,11 +51,15 @@ void main() {
   });
 
   testWidgets('bloc_complex', (WidgetTester tester) async {
-    final catalog = CatalogBloc();
-    final cart = CartBloc();
-    final app = bloc_complex.MyApp(catalog, cart);
-
-    await _performSmokeTest(tester, app, productName: "Product 43740");
+    // We need runAsync here because CatalogBloc uses a Timer
+    // (via RX bufferTime). For more info:
+    // https://github.com/flutter/flutter/issues/17738
+    tester.runAsync(() async {
+      final catalog = CatalogBloc();
+      final cart = CartBloc();
+      final app = bloc_complex.MyApp(catalog, cart);
+      await _performSmokeTest(tester, app, productName: "Product 43740");
+    });
   });
 }
 
