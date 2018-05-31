@@ -1,8 +1,15 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:reactive_exploration/common/models/cart.dart';
 import 'package:reactive_exploration/common/widgets/cart_button.dart';
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
+import 'package:reactive_exploration/src/bloc_complex/cart/cart_bloc.dart';
+import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_bloc.dart';
+import 'package:reactive_exploration/src/bloc_complex/main.dart'
+    as bloc_complex;
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 import 'package:reactive_exploration/src/scoped/complete.dart' as scoped_model;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
@@ -42,6 +49,18 @@ void main() {
 
     await _performSmokeTest(tester, app);
   });
+
+  testWidgets('bloc_complex', (WidgetTester tester) async {
+    // We need runAsync here because CatalogBloc uses a Timer
+    // (via RX bufferTime). For more info:
+    // https://github.com/flutter/flutter/issues/17738
+    tester.runAsync(() async {
+      final catalog = CatalogBloc();
+      final cart = CartBloc();
+      final app = bloc_complex.MyApp(catalog, cart);
+      await _performSmokeTest(tester, app, productName: "Product 43740");
+    });
+  });
 }
 
 /// Verifies that the app compiles and runs, and that tapping products
@@ -49,7 +68,8 @@ void main() {
 ///
 /// This test exists to ensure that the sample works with future versions
 /// of Flutter.
-Future _performSmokeTest(WidgetTester tester, Widget app) async {
+Future _performSmokeTest(WidgetTester tester, Widget app,
+    {String productName: "Socks"}) async {
   await tester.pumpWidget(app);
 
   expect(find.text("0"), findsOneWidget);
@@ -62,7 +82,7 @@ Future _performSmokeTest(WidgetTester tester, Widget app) async {
   await tester.pageBack();
   await tester.pumpAndSettle();
 
-  await tester.tap(find.text("Socks"));
+  await tester.tap(find.text(productName));
   await tester.pumpAndSettle();
 
   expect(find.text("1"), findsOneWidget);
@@ -71,5 +91,5 @@ Future _performSmokeTest(WidgetTester tester, Widget app) async {
   await tester.pumpAndSettle();
 
   expect(find.text("Empty"), findsNothing);
-  expect(find.text("Socks"), findsOneWidget);
+  expect(find.text(productName), findsOneWidget);
 }

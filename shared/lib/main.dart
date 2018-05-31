@@ -1,4 +1,6 @@
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
+import 'package:reactive_exploration/src/bloc_complex/main.dart'
+    as bloc_complex;
 import 'package:reactive_exploration/src/bloc_start/main.dart' as bloc_start;
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 import 'package:reactive_exploration/src/scoped/complete.dart' as scoped;
@@ -9,6 +11,13 @@ import 'package:reactive_exploration/src/value_notifier/main.dart'
     as value_notifier;
 import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 
+/// This rather unconventional main method allows us to switch to vastly
+/// different implementations of the same app without confusing Flutter
+/// and the IDE with many `main.dart` files in `lib/`.
+///
+/// All this main function does is run _another_ main function in one of
+/// the imported files. When you're exploring a particular architecture,
+/// just change the `flavor = ...` line below and (hot-)restart the app.
 void main() {
   final flavor = Architecture.vanilla;
 
@@ -33,6 +42,9 @@ void main() {
     case Architecture.bloc:
       bloc.main();
       return;
+    case Architecture.blocComplex:
+      bloc_complex.main();
+      return;
     case Architecture.blocStart:
       bloc_start.main();
       return;
@@ -47,6 +59,7 @@ void main() {
 
 enum Architecture {
   bloc,
+  blocComplex,
   blocStart,
   scoped,
   singleton,
