@@ -88,20 +88,20 @@ class CatalogBloc {
   }
 
   /// Fetches a page of products from a database. The [CatalogPage.startIndex]
-  /// of the returned value will be [index].
-  Future<CatalogPage> _requestPage(int index) async {
+  /// of the returned value will be [offset].
+  Future<CatalogPage> _requestPage(int offset) async {
     // Simulate network delay.
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 3000));
 
     // Create a list of random products. We seed the random generator with
     // index so that scrolling back to a position gives the same exact products.
-    final random = Random(index);
-    final products = List.generate(_productsPerPage, (_) {
+    final random = Random(offset);
+    final products = List.generate(_productsPerPage, (index) {
       final number = random.nextInt(0xffff);
       final color = Color(0xFF000000 | random.nextInt(0xFFFFFF));
-      return Product(number, "Product $number", color);
+      return Product(number, "Product $number (#${offset + index})", color);
     });
-    return CatalogPage(products, index);
+    return CatalogPage(products, offset);
   }
 
   /// Creates a [CatalogSlice] from the current [_pages] and sends it
