@@ -22,7 +22,7 @@ import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 void main() {
   MaterialPageRoute.debugEnableFadingRoutes = true;
 
-  final flavor = Architecture.blocComplex;
+  final flavor = Architecture.vanilla;
 
   print("\n\n===== Running: $flavor =====\n\n");
 
