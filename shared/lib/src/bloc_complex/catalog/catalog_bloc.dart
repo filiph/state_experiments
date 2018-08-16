@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:reactive_exploration/common/models/product.dart';
-import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_page.dart';
+import 'package:reactive_exploration/src/bloc_complex/services/catalog.dart';
+import 'package:reactive_exploration/src/bloc_complex/services/catalog_page.dart';
 import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_slice.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -13,8 +13,6 @@ import 'package:rxdart/rxdart.dart';
 /// Only the data that are close to the current location are cached, the rest
 /// are thrown away.
 class CatalogBloc {
-  static const _productsPerPage = 10;
-
   /// We're using ReactiveX's [PublishSubject] here because we want to easily
   /// buffer the stream. See [CatalogBloc] constructor.
   final _indexController = PublishSubject<int>();
@@ -29,7 +27,9 @@ class CatalogBloc {
 
   final _sliceSubject = BehaviorSubject<CatalogSlice>();
 
-  CatalogBloc() {
+  final CatalogService _catalogService;
+
+  CatalogBloc(this._catalogService) {
     _indexController.stream
         // Don't try to update too frequently.
         .bufferTime(Duration(milliseconds: 500))
@@ -53,7 +53,8 @@ class CatalogBloc {
   /// Outputs the [CatalogPage.startIndex] given an arbitrary index of
   /// a product.
   int _getPageStartFromIndex(int index) =>
-      (index ~/ _productsPerPage) * _productsPerPage;
+      (index ~/ CatalogService.productsPerPage) *
+      CatalogService.productsPerPage;
 
   /// This will handle the incoming [indexes] (that were requested by
   /// a [IndexedWidgetBuilder]) and, if needed, will fetch missing data.
@@ -65,18 +66,20 @@ class CatalogBloc {
     final minPageIndex = _getPageStartFromIndex(minIndex);
     final maxPageIndex = _getPageStartFromIndex(maxIndex);
 
-    for (int i = minPageIndex; i <= maxPageIndex; i += _productsPerPage) {
+    for (int i = minPageIndex;
+        i <= maxPageIndex;
+        i += CatalogService.productsPerPage) {
       if (_pages.containsKey(i)) continue;
       if (_pagesBeingRequested.contains(i)) continue;
 
       _pagesBeingRequested.add(i);
-      _requestPage(i).then((page) => _handleNewPage(page, i));
+      _catalogService.requestPage(i).then((page) => _handleNewPage(page, i));
     }
 
     // Remove pages too far from current scroll position.
     _pages.removeWhere((pageIndex, _) =>
-        pageIndex < minPageIndex - _productsPerPage ||
-        pageIndex > maxPageIndex + _productsPerPage);
+        pageIndex < minPageIndex - CatalogService.productsPerPage ||
+        pageIndex > maxPageIndex + CatalogService.productsPerPage);
   }
 
   /// Handles arrival of a new [page] from the network. Will call
@@ -85,23 +88,6 @@ class CatalogBloc {
     _pages[index] = page;
     _pagesBeingRequested.remove(index);
     _sendNewSlice();
-  }
-
-  /// Fetches a page of products from a database. The [CatalogPage.startIndex]
-  /// of the returned value will be [offset].
-  Future<CatalogPage> _requestPage(int offset) async {
-    // Simulate network delay.
-    await Future.delayed(const Duration(milliseconds: 3000));
-
-    // Create a list of random products. We seed the random generator with
-    // index so that scrolling back to a position gives the same exact products.
-    final random = Random(offset);
-    final products = List.generate(_productsPerPage, (index) {
-      final number = random.nextInt(0xffff);
-      final color = Color(0xFF000000 | random.nextInt(0xFFFFFF));
-      return Product(number, "Product $number (#${offset + index})", color);
-    });
-    return CatalogPage(products, offset);
   }
 
   /// Creates a [CatalogSlice] from the current [_pages] and sends it

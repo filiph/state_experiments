@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:reactive_exploration/common/models/product.dart';
-import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_page.dart';
+import 'package:reactive_exploration/src/bloc_complex/services/catalog_page.dart';
 
 /// A slice of the catalog provided to an infinite-scrolling [ListView].
 ///

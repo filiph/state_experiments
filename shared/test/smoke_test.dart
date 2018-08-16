@@ -10,6 +10,7 @@ import 'package:reactive_exploration/src/bloc_complex/cart/cart_bloc.dart';
 import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_bloc.dart';
 import 'package:reactive_exploration/src/bloc_complex/main.dart'
     as bloc_complex;
+import 'package:reactive_exploration/src/bloc_complex/services/catalog.dart';
 import 'package:reactive_exploration/src/redux/main.dart' as redux;
 import 'package:reactive_exploration/src/scoped/complete.dart' as scoped_model;
 import 'package:reactive_exploration/src/value_notifier/main.dart'
@@ -55,7 +56,8 @@ void main() {
     // (via RX bufferTime). For more info:
     // https://github.com/flutter/flutter/issues/17738
     tester.runAsync(() async {
-      final catalog = CatalogBloc();
+      final catalogService = CatalogService();
+      final catalog = CatalogBloc(catalogService);
       final cart = CartBloc();
       final app = bloc_complex.MyApp(catalog, cart);
       await _performSmokeTest(tester, app, productName: "Product 43740");
