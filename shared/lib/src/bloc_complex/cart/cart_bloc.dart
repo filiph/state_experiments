@@ -15,7 +15,7 @@ class CartAddition {
 class CartBloc {
   // This is the internal state. It's mostly a helper object so that the code
   // in this class only deals with streams.
-  final _cart = Cart();
+  final _cart = Cart();  XXX START HERE - use CartService
 
   // These are the internal objects whose streams / sinks are provided
   // by this component. See below for what each means.
