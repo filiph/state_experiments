@@ -61,7 +61,7 @@ void main() {
       final cart = CartBloc();
       final app = bloc_complex.MyApp(catalog, cart);
 
-      // The product name is generated in bloc_complex.
+      // The product name is generated in bloc_complex, so no "Socks" here.
       final productName = "Product 43740 (#0)";
 
       await tester.pumpWidget(app);
@@ -109,7 +109,7 @@ Future _performSmokeTest(WidgetTester tester, Widget app) async {
   expect(find.text("Empty"), findsOneWidget);
 
   await tester.pageBack();
-  await tester.pumpAndSettle(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
 
   await tester.tap(find.text("Socks"));
   await tester.pumpAndSettle();
