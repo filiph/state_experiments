@@ -5,6 +5,8 @@ import 'dart:ui';
 import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 
+/// A low-level service that provides the basic functionality of
+/// a mock e-shop cart.
 class CartService {
   final List<CartItem> _items = <CartItem>[];
 
