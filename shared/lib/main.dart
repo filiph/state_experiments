@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:reactive_exploration/src/bloc/main.dart' as bloc;
 import 'package:reactive_exploration/src/bloc_complex/main.dart'
     as bloc_complex;
@@ -20,8 +19,6 @@ import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 /// the imported files. When you're exploring a particular architecture,
 /// just change the `flavor = ...` line below and (hot-)restart the app.
 void main() {
-  MaterialPageRoute.debugEnableFadingRoutes = true;
-
   final flavor = Architecture.vanilla;
 
   print("\n\n===== Running: $flavor =====\n\n");
