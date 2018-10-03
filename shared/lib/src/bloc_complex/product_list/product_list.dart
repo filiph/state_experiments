@@ -50,7 +50,7 @@ class ProductList extends StatelessWidget {
         firstChild: ProductLine(null),
         secondChild: ProductLine(
           product,
-          inCart: slice.isInCart(index),
+          isInCart: slice.isInCart(index),
           key: loaded ? Key(product.id.toString()) : null,
           onTap: () {
             cartBloc.cartAddition.add(CartAddition(product));

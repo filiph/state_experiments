@@ -4,7 +4,7 @@ import 'package:reactive_exploration/common/models/product.dart';
 class ProductLine extends StatelessWidget {
   final Product product;
 
-  final bool inCart;
+  final bool isInCart;
 
   final void Function() onTap;
 
@@ -21,7 +21,7 @@ class ProductLine extends StatelessWidget {
     this.product, {
     Key key,
     this.onTap,
-    this.inCart = false,
+    this.isInCart = false,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,10 @@ class ProductLine extends StatelessWidget {
         : '';
 
     final image = product != null
-        ? Placeholder(color: color)
+        ? Placeholder(
+            color: color,
+            strokeWidth: isInCart ? 8.0 : 2.0,
+          )
         : Padding(
             padding: const EdgeInsets.all(24.0),
             child: CircularProgressIndicator(
@@ -60,6 +63,7 @@ class ProductLine extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: AspectRatio(
@@ -70,11 +74,11 @@ class ProductLine extends StatelessWidget {
             Expanded(
               flex: 3,
               child: Padding(
-                padding: const EdgeInsets.only(left: 24.0),
+                padding: const EdgeInsets.only(left: 24.0, top: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name + (inCart ? '<>' : ''), style: boldTitle),
+                    Text(name, style: boldTitle),
                     SizedBox(height: 8.0),
                     Text(
                       tagline,
