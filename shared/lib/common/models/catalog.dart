@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:math';
 import 'dart:ui' show Color;
 
 import 'package:reactive_exploration/common/models/product.dart';

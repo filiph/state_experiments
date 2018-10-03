@@ -70,7 +70,7 @@ class MyHomePage extends StatelessWidget {
           )
         ],
       ),
-      body: ProductGrid(),
+      body: ProductList(),
     );
   }
 }
