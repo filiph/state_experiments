@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
@@ -15,6 +16,12 @@ class CatalogBloc {
   /// We're using ReactiveX's [PublishSubject] here because we want to easily
   /// buffer the stream. See [CatalogBloc] constructor.
   final _indexController = PublishSubject<int>();
+
+  /// The controller behind the [inCartProductIds] sink.
+  final _inCartProductIdsController = StreamController<List<int>>();
+
+  /// A cached copy of currently bought product ids.
+  List<int> _inCartProductIds = [];
 
   /// These are the pages stored in memory. For O(1) retrieval, we're storing
   /// them in a [Map]. The key value is [CatalogPage.startIndex].
@@ -36,7 +43,13 @@ class CatalogBloc {
         // Don't update when there is no need.
         .where((batch) => batch.isNotEmpty)
         .listen(_handleIndexes);
+
+    _inCartProductIdsController.stream.listen(_handleBoughtProductIds);
   }
+
+  /// An input of products that are currently in cart. These will be marked
+  /// as such in the provided [slice].
+  Sink<List<int>> get inCartProductIds => _inCartProductIdsController.sink;
 
   /// An input of the indexes that the [ListView.builder]
   /// (or [GridView.builder]) is getting in its builder callbacks. Just push
@@ -52,6 +65,7 @@ class CatalogBloc {
 
   void dispose() {
     _indexController.close();
+    _inCartProductIdsController.close();
   }
 
   /// Outputs the [CatalogPage.startIndex] given an arbitrary index of
@@ -59,6 +73,13 @@ class CatalogBloc {
   int _getPageStartFromIndex(int index) =>
       (index ~/ CatalogService.productsPerPage) *
       CatalogService.productsPerPage;
+
+  /// The bought ids have changed. Update the cached copy and send
+  /// the updated slice.
+  void _handleBoughtProductIds(List<int> newIds) {
+    _inCartProductIds = newIds;
+    _sendNewSlice();
+  }
 
   /// This will handle the incoming [indexes] (that were requested by
   /// a [IndexedWidgetBuilder]) and, if needed, will fetch missing data.
@@ -99,7 +120,7 @@ class CatalogBloc {
   void _sendNewSlice() {
     final pages = _pages.values.toList(growable: false);
 
-    final slice = CatalogSlice(pages, true);
+    final slice = CatalogSlice(pages, _inCartProductIds, true);
 
     _sliceSubject.add(slice);
   }

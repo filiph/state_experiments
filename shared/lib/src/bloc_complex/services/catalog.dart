@@ -27,9 +27,9 @@ class CatalogService {
     // index so that scrolling back to a position gives the same exact products.
     final random = Random(offset);
     final products = List.generate(productsPerPage, (index) {
-      final id = random.nextInt(0xffff);
+      final id = random.nextInt(0xfff);
       final color = Color(0xFF000000 | random.nextInt(0xFFFFFF));
-      return Product(id, "Product $id (#${offset + index})", color);
+      return Product(id, "PRODUCT $id (#${offset + index})", color);
     });
     return CatalogPage(products, offset);
   }

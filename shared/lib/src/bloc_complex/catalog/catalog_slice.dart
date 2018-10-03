@@ -12,6 +12,8 @@ import 'package:reactive_exploration/src/bloc_complex/services/catalog_page.dart
 class CatalogSlice {
   final List<CatalogPage> _pages;
 
+  final List<int> _inCartProductIds;
+
   /// The index at which this slice starts to provide [Product]s.
   final int startIndex;
 
@@ -20,11 +22,12 @@ class CatalogSlice {
   /// Currently always `true` as our catalog is infinite.
   final bool hasNext;
 
-  CatalogSlice(this._pages, this.hasNext)
+  CatalogSlice(this._pages, this._inCartProductIds, this.hasNext)
       : startIndex = _pages.map((p) => p.startIndex).fold(0x7FFFFFFF, min);
 
   const CatalogSlice.empty()
       : _pages = const [],
+        _inCartProductIds = const [],
         startIndex = 0,
         hasNext = true;
 
@@ -40,5 +43,10 @@ class CatalogSlice {
       }
     }
     return null;
+  }
+
+  /// Returns `true` if the element at [index] is currently in cart.
+  bool isInCart(int index) {
+    return _inCartProductIds.contains(elementAt(index)?.id);
   }
 }

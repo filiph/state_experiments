@@ -5,7 +5,7 @@ import 'package:reactive_exploration/src/bloc_complex/cart/bloc_cart_page.dart';
 import 'package:reactive_exploration/src/bloc_complex/cart/cart_bloc.dart';
 import 'package:reactive_exploration/src/bloc_complex/cart/cart_provider.dart';
 import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_bloc.dart';
-import 'package:reactive_exploration/src/bloc_complex/product_grid/product_grid.dart';
+import 'package:reactive_exploration/src/bloc_complex/product_list/product_list.dart';
 import 'package:reactive_exploration/src/bloc_complex/services/catalog.dart';
 
 void main() {
@@ -16,6 +16,12 @@ void main() {
   // In a real world app, this would also rope in HTTP clients and such.
   final catalog = CatalogBloc(catalogService);
   final cart = CartBloc();
+
+  // Pipe item ids from the cart to catalog, so that it can show bought products
+  // accordingly.
+  cart.items
+      .map((items) => items.map((item) => item.product.id).toList())
+      .listen(catalog.inCartProductIds.add);
 
   // Start the app.
   runApp(MyApp(catalog, cart));
