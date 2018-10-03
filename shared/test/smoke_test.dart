@@ -62,11 +62,15 @@ void main() {
       final app = bloc_complex.MyApp(catalog, cart);
 
       // The product name is generated in bloc_complex, so no "Socks" here.
-      final productName = "Product 2235 (#0)";
+      final productName = "PRODUCT 2235 (#0)";
 
       await tester.pumpWidget(app);
 
       expect(find.text("0"), findsOneWidget);
+
+      // We need this piece of real asynchrony here so that CatalogBloc can
+      // fetch data.
+      await Future.delayed(const Duration(seconds: 1));
 
       await tester.tap(find.byType(CartButton));
       await tester.pumpAndSettle();
@@ -74,8 +78,7 @@ void main() {
       expect(find.text("Empty"), findsOneWidget);
 
       await tester.pageBack();
-      // We need this piece of real asynchrony here so that the bloc can
-      // do its thing.
+      // Again, a piece of real asynchrony, to wait for CatalogBloc.
       await Future.delayed(const Duration(seconds: 1));
       await tester.pumpAndSettle();
 
