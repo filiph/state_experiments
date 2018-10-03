@@ -16,7 +16,7 @@ import 'package:reactive_exploration/src/vanilla/main.dart' as vanilla;
 /// the imported files. When you're exploring a particular architecture,
 /// just change the `flavor = ...` line below and (hot-)restart the app.
 void main() {
-  final flavor = Architecture.vanilla;
+  final flavor = Architecture.blocComplex;
 
   print("\n\n===== Running: $flavor =====\n\n");
 

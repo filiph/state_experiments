@@ -22,7 +22,7 @@ class ProductList extends StatelessWidget {
 
     return StreamBuilder<CatalogSlice>(
       stream: catalogBloc.slice,
-      initialData: CatalogSlice.empty(),
+      initialData: catalogBloc.slice.value,
       builder: (context, snapshot) => ListView.builder(
             padding: EdgeInsets.only(top: 16.0),
             itemCount: snapshot.data.endIndex + _loadingSpace,

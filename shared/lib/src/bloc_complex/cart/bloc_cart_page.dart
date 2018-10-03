@@ -17,6 +17,7 @@ class BlocCartPage extends StatelessWidget {
       ),
       body: StreamBuilder<List<CartItem>>(
           stream: cart.items,
+          initialData: cart.items.value,
           builder: (context, snapshot) {
             if (snapshot.data?.isEmpty ?? true) {
               return Center(

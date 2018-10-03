@@ -2,7 +2,10 @@ name: reactive_exploration
 description: Reactive Flutter apps
 
 dependencies:
-  rxdart: ^0.18.0
+  rxdart:
+    git:
+      url: https://github.com/ReactiveX/rxdart.git
+      ref: 7ca6d80  # Introduces ValueObservable
   flutter:
     sdk: flutter
 
