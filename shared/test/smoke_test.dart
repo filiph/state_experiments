@@ -62,7 +62,7 @@ void main() {
       final app = bloc_complex.MyApp(catalog, cart);
 
       // The product name is generated in bloc_complex, so no "Socks" here.
-      final productName = "Product 43740 (#0)";
+      final productName = "Product 2235 (#0)";
 
       await tester.pumpWidget(app);
 
