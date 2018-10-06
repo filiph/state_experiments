@@ -46,10 +46,7 @@ class ProductLine extends StatelessWidget {
         : '';
 
     final image = product != null
-        ? Placeholder(
-            color: color,
-            strokeWidth: isInCart ? 8.0 : 2.0,
-          )
+        ? Placeholder(color: color)
         : Padding(
             padding: const EdgeInsets.all(24.0),
             child: CircularProgressIndicator(
@@ -68,7 +65,24 @@ class ProductLine extends StatelessWidget {
             Expanded(
               child: AspectRatio(
                 aspectRatio: 1.0,
-                child: image,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    image,
+                    isInCart
+                        ? Container(
+                            color: Colors.red,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'BOUGHT',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          )
+                        : Container()
+                  ],
+                ),
               ),
             ),
             Expanded(
