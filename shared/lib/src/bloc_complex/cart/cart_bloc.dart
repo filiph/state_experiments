@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:reactive_exploration/common/models/cart_item.dart';
 import 'package:reactive_exploration/common/models/product.dart';
 import 'package:reactive_exploration/src/bloc_complex/services/cart.dart';
-import 'package:rxdart/subjects.dart';
+import 'package:rxdart/rxdart.dart';
 
 class CartAddition {
   final Product product;
@@ -36,11 +36,15 @@ class CartBloc {
   ///
   /// We're using the `distinct()` transform so that only values that are
   /// in fact a change will be published by the stream.
-  Stream<int> get itemCount => _itemCount.stream.distinct();
+  ValueObservable<int> get itemCount => _itemCount
+      .distinct()
+      // Since we're using the distinct operator, we need to convert back
+      // to a ValueObservable using shareValue.
+      .shareValue(seedValue: 0);
 
   /// This is the stream of items in the cart. Use this to show the contents
   /// of the cart when you need all the information in [CartItem].
-  Stream<List<CartItem>> get items => _items.stream;
+  ValueObservable<List<CartItem>> get items => _items.stream;
 
   /// Take care of closing streams.
   void dispose() {

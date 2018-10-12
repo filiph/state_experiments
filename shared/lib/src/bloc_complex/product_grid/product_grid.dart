@@ -25,7 +25,7 @@ class ProductGrid extends StatelessWidget {
 
     return StreamBuilder<CatalogSlice>(
       stream: catalogBloc.slice,
-      initialData: CatalogSlice.empty(),
+      initialData: catalogBloc.slice.value,
       builder: (context, snapshot) => GridView.builder(
             gridDelegate: _gridDelegate,
             itemCount: snapshot.data.endIndex + _loadingSpace,

@@ -17,7 +17,7 @@ import 'package:rxdart/rxdart.dart';
 /// with each other using streams. In this case, the [CartBloc.items] output
 /// plugs into the [ProductSquareBloc.cartItems] input.
 class ProductSquareBloc {
-  final _isInCartSubject = BehaviorSubject<bool>();
+  final _isInCartSubject = BehaviorSubject<bool>(seedValue: false);
 
   final _cartItemsController = StreamController<List<CartItem>>();
 
@@ -31,7 +31,7 @@ class ProductSquareBloc {
 
   /// Tells the [ProductSquare] widget whether its product is already
   /// in cart or not.
-  Stream<bool> get isInCart => _isInCartSubject.stream;
+  ValueObservable<bool> get isInCart => _isInCartSubject.stream;
 
   /// This business logic component will have shorter lifespan than the app
   /// so we do need to dispose of it properly.

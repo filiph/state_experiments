@@ -1,10 +1,9 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
+import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_slice.dart';
 import 'package:reactive_exploration/src/bloc_complex/services/catalog.dart';
 import 'package:reactive_exploration/src/bloc_complex/services/catalog_page.dart';
-import 'package:reactive_exploration/src/bloc_complex/catalog/catalog_slice.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// This component encapsulates the logic of fetching products from
@@ -25,7 +24,8 @@ class CatalogBloc {
   /// They are identified by their [CatalogPage.startIndex].
   final _pagesBeingRequested = Set<int>();
 
-  final _sliceSubject = BehaviorSubject<CatalogSlice>();
+  final _sliceSubject =
+      BehaviorSubject<CatalogSlice>(seedValue: CatalogSlice.empty());
 
   final CatalogService _catalogService;
 
@@ -48,7 +48,7 @@ class CatalogBloc {
 
   /// The currently available data, as a slice of the (potentially infinite)
   /// catalog.
-  Stream<CatalogSlice> get slice => _sliceSubject.stream;
+  ValueObservable<CatalogSlice> get slice => _sliceSubject.stream;
 
   /// Outputs the [CatalogPage.startIndex] given an arbitrary index of
   /// a product.

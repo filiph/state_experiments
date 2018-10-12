@@ -54,7 +54,7 @@ class _ProductSquareState extends State<ProductSquare> {
         child: Center(
           child: StreamBuilder<bool>(
               stream: _bloc.isInCart,
-              initialData: false,
+              initialData: _bloc.isInCart.value,
               builder: (context, snapshot) => _createText(snapshot.data)),
         ),
       ),
