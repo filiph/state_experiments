@@ -29,8 +29,7 @@ class CatalogSlice {
         hasNext = true;
 
   /// The index of the last product of this slice.
-  int get endIndex =>
-      startIndex + _pages.map((page) => page.endIndex).fold(-1, max);
+  int get endIndex => _pages.map((page) => page.endIndex).fold(-1, max);
 
   /// Returns the product at [index], or `null` if data isn't loaded yet.
   Product elementAt(int index) {
