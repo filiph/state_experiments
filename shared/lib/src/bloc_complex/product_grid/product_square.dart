@@ -23,7 +23,7 @@ class ProductSquare extends StatefulWidget {
   final GestureTapCallback onTap;
 
   ProductSquare({
-    Key key,
+    @required Key key,
     @required this.product,
     @required this.itemsStream,
     this.onTap,
@@ -61,35 +61,32 @@ class _ProductSquareState extends State<ProductSquare> {
     );
   }
 
-  /// Remember: widgets can change from above the [State] at the framework's
-  /// discretion. We need to make sure we always update the [State]
-  /// to reflect the [StatefulWidget].
-  ///
-  /// Here, we're disposing of the old [_bloc] and creating a new one.
+  /// Widgets can change from above the [State] at the framework's
+  /// discretion. But we don't need to update the [State] because the key is specified
   @override
   void didUpdateWidget(ProductSquare oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _disposeBloc();
-    _createBloc();
+//    print(
+//        'didUpdateWidget(old: ${oldWidget.product.id}, current: ${widget.product.id})');
+    assert(widget.product == oldWidget.product,
+        'ProductSquare\'s key is specified, so the same product is keeped always');
   }
 
   @override
   void dispose() {
-    _disposeBloc();
+    _subscription.cancel();
+    _bloc.dispose();
     super.dispose();
   }
 
   /// Initialize business logic components that you will be disposing of in
   /// [initState].
+  ///
+  /// Create the [ProductSquareBloc] and pipe the stream of cart items
+  /// into its [ProductSquareBloc.cartItems] input.
   @override
   void initState() {
     super.initState();
-    _createBloc();
-  }
-
-  /// Create the [ProductSquareBloc] and pipe the stream of cart items
-  /// into its [ProductSquareBloc.cartItems] input.
-  void _createBloc() {
     _bloc = ProductSquareBloc(widget.product);
     _subscription = widget.itemsStream.listen(_bloc.cartItems.add);
   }
@@ -105,10 +102,5 @@ class _ProductSquareState extends State<ProductSquare> {
         decoration: isInCart ? TextDecoration.underline : null,
       ),
     );
-  }
-
-  void _disposeBloc() {
-    _subscription.cancel();
-    _bloc.dispose();
   }
 }
